@@ -7,7 +7,8 @@ import { ShowPlanComponent } from './show-plan/show-plan.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyPlansComponent } from './my-plans/my-plans.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatInputModule} from "@angular/material";
+import {MatCardModule, MatInputModule} from "@angular/material";
+import {HttpClientModule} from "@angular/common/http";
 
 
 const routes: Routes = [
@@ -25,9 +26,9 @@ const routes: Routes = [
     MyPlansComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,HttpClientModule,
     BrowserAnimationsModule,
-    MatInputModule,
+    MatInputModule,MatCardModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],

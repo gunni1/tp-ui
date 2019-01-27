@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Practice} from "../practice";
+import {Practice} from "../plan/practice";
 
 @Component({
   selector: 'app-show-plan',

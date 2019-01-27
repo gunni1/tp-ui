@@ -1,37 +1,52 @@
 <div class="container">
-  <form [formGroup]="form">
-    <div class="row">
-      <div class="col-4">
-        <mat-form-field>
-          <input matInput placeholder="Titel" formControlName="title"  >
-        </mat-form-field>
-      </div>
-      <div class="col-8">
-        <button (click)="onSubmit()" type="button" class="btn btn-success">Plan erstellen</button>
-      </div>
-    </div>
-    <div formArrayName="practices">
-      <div *ngFor="let practice of form.get('practices').controls; let practicesIndex=index">
-        <div [formGroupName]="practicesIndex" class="row">
-          <div class="col-6">
-            <mat-form-field>
-              <input matInput placeholder="Übung" formControlName="name">
-            </mat-form-field>
-          </div>
+  <mat-card>
+    <mat-card-title>Plan Erstellen</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <div class="row">
           <div class="col-4">
             <mat-form-field>
-              <input matInput placeholder="Wiederholungen / Dauer" formControlName="reps">
+              <input matInput placeholder="Titel" formControlName="title"  >
             </mat-form-field>
           </div>
-          <div class="col-2">
-            <button (click)="removePracticeControls(practicesIndex)" type="button" class="btn btn-secondary">X</button>
+        </div>
+        <div formArrayName="practices">
+          <div *ngFor="let practice of form.get('practices').controls; let practicesIndex=index">
+            <div [formGroupName]="practicesIndex" class="row">
+              <div class="col-7">
+                <mat-form-field>
+                  <input matInput placeholder="Übung" formControlName="name">
+                </mat-form-field>
+              </div>
+              <div class="col-4">
+                <mat-form-field>
+                  <input matInput placeholder="Wiederholungen / Dauer" formControlName="reps">
+                </mat-form-field>
+              </div>
+              <div class="col-1">
+                <button (click)="removePracticeControls(practicesIndex)" type="button" class="btn btn-secondary float-right">X</button>
+              </div>
+            </div>
+
           </div>
         </div>
-
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="row">
+        <div class="col">
+          <button (click)="onSubmit()" type="button" class="btn btn-success">Plan erstellen</button>
+        </div>
+        <div class="col">
+          <button (click)="addPracticeControls()" type="button" class="btn btn-primary float-right">weitere Übung</button>
+        </div>
       </div>
-    </div>
-  </form>
-  <button (click)="addPracticeControls()" type="button" class="btn btn-primary">Übung Hinzufügen</button>
+
+    </mat-card-actions>
+  </mat-card>
+
+
+
 </div>
 
 

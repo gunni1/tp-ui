@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {Practice} from "../practice";
+import {Practice} from "../plan/practice";
+import {PlanService} from "../plan/plan.service";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -11,15 +12,28 @@ export class NewPlanFormComponent implements OnInit {
 
   form: FormGroup;
 
+  @Input()
+  modelId: string
+
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private planService: PlanService
   ) { }
 
   ngOnInit() {
-    this.initForm()
+    if(this.modelId == undefined){
+      this.initEmptyForm()
+    } else {
+      this.initWithPlan(this.modelId)
+    }
+
   }
 
-  private initForm() {
+  private initWithPlan(planId: string) {
+
+  }
+
+  private initEmptyForm() {
     this.form = this.formBuilder.group({
       title: this.formBuilder.control(''),
       practices: this.formBuilder.array([
