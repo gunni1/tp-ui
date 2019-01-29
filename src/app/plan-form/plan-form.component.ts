@@ -2,35 +2,65 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Practice} from "../plan/practice";
 import {PlanService} from "../plan/plan.service";
+import {ActivatedRoute, ParamMap} from "@angular/router";
+import {switchMap} from "rxjs/operators";
+import {handleError} from "../helpers";
 
 @Component({
   selector: 'app-new-plan-form',
-  templateUrl: './new-plan-form.component.html',
-  styleUrls: ['./new-plan-form.component.css']
+  templateUrl: './plan-form.component.html',
+  styleUrls: ['./plan-form.component.css']
 })
-export class NewPlanFormComponent implements OnInit {
+export class PlanFormComponent implements OnInit {
 
   form: FormGroup;
 
-  @Input()
+
   modelId: string
 
   constructor(
     private formBuilder: FormBuilder,
-    private planService: PlanService
+    private planService: PlanService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    if(this.modelId == undefined){
-      this.initEmptyForm()
-    } else {
-      this.initWithPlan(this.modelId)
-    }
+    this.route.paramMap.subscribe(params => {
+      this.modelId = params.get('planId') || null
+      if (this.modelId !== null) {
+        this.initWithPlanId(this.modelId)
+      } else {
+        this.initEmptyForm()
+      }
+    });
+
 
   }
 
-  private initWithPlan(planId: string) {
+  private initWithPlanId(planId: string) {
+    this.planService.getPlan(planId).subscribe(
+      plan => {
+        this.form = this.formBuilder.group({
+          title: this.formBuilder.control(plan.title),
+          practices: this.asFormArray(plan.practices)
+        })
+      },
+      err => {
+        handleError(err);
+        this.initEmptyForm()
+      }
+    )
+  }
 
+  private asFormArray(practices: Practice[]):FormArray {
+    let result = this.formBuilder.array([])
+    for(let practice of practices){
+      result.push(this.formBuilder.group({
+        name: this.formBuilder.control(practice.name),
+        reps: this.formBuilder.control(practice.reps)
+      }))
+    }
+    return result
   }
 
   private initEmptyForm() {
