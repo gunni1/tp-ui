@@ -3,7 +3,7 @@
 export class Practice  {
   constructor (
     public name: string,
-    public reps: string
+    public quantity: string
   ) {}
 }
 

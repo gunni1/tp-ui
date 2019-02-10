@@ -25,12 +25,11 @@ export class PlanFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.initEmptyForm()
     this.route.paramMap.subscribe(params => {
       this.modelId = params.get('planId') || null
       if (this.modelId !== null) {
         this.initWithPlanId(this.modelId)
-      } else {
-        this.initEmptyForm()
       }
     });
 
@@ -57,7 +56,7 @@ export class PlanFormComponent implements OnInit {
     for(let practice of practices){
       result.push(this.formBuilder.group({
         name: this.formBuilder.control(practice.name),
-        reps: this.formBuilder.control(practice.reps)
+        quantity: this.formBuilder.control(practice.quantity)
       }))
     }
     return result
@@ -69,7 +68,7 @@ export class PlanFormComponent implements OnInit {
       practices: this.formBuilder.array([
         this.formBuilder.group({
           name: this.formBuilder.control(''),
-          reps: this.formBuilder.control('')
+          quantity: this.formBuilder.control('')
         })
       ])
     });
@@ -86,7 +85,7 @@ export class PlanFormComponent implements OnInit {
     control.push(
       this.formBuilder.group({
         name: this.formBuilder.control(''),
-        reps: this.formBuilder.control('')
+        quantity: this.formBuilder.control('')
       })
     )
   }

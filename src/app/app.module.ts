@@ -12,7 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 
 
 const routes: Routes = [
-  { path: 'new-plan/:planId', component: PlanFormComponent },
+  { path: 'plan/:planId', component: PlanFormComponent },
   { path: 'new-plan', component: PlanFormComponent },
   { path: 'my-plans', component: MyPlansComponent },
   { path: 'show-plan', component: ShowPlanComponent },
