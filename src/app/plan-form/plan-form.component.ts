@@ -2,9 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Practice} from "../plan/practice";
 import {PlanService} from "../plan/plan.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {switchMap} from "rxjs/operators";
 import {handleError} from "../helpers";
+import {Plan} from "../plan/plan";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -22,6 +23,7 @@ export class PlanFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private planService: PlanService,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -45,8 +47,11 @@ export class PlanFormComponent implements OnInit {
         })
       },
       err => {
+        if(err.error.error === "NO_PLAN_FOUND") {
+          this.router.navigateByUrl("/new-plan")
+        }
         handleError(err);
-        this.initEmptyForm()
+        
       }
     )
   }
@@ -60,6 +65,16 @@ export class PlanFormComponent implements OnInit {
       }))
     }
     return result
+  }
+
+  private getPractices(): Practice[] {
+    let practiceFormArray = this.form.get('practices') as FormArray
+    let practices = []
+    for (let i=0; i < practiceFormArray.length; i++) {
+      let formGroup = practiceFormArray.at(i)
+      practices.push(new Practice(formGroup.get('name').value, formGroup.get('quantity').value))
+    }
+    return practices
   }
 
   private initEmptyForm() {
@@ -76,6 +91,12 @@ export class PlanFormComponent implements OnInit {
 
   private onSubmit() {
 
+    let practices = this.getPractices()
+    let plan = new Plan(this.modelId, this.form.get('title').value, practices)
+    this.planService.saveOrUpdatePlan(plan).subscribe(
+      plan => console.log('success'),
+      error1 => handleError(error1)
+    )
   }
 
 
@@ -95,7 +116,4 @@ export class PlanFormComponent implements OnInit {
     control.removeAt(index);
   }
 
-  private getPractices() {
-    return this.form.get('practices') as FormArray
-  }
 }

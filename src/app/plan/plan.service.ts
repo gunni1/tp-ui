@@ -21,4 +21,16 @@ export class PlanService {
     };
     return this.http.get<Plan>(url, httpOptions);
   }
+
+
+
+  saveOrUpdatePlan(plan: Plan): Observable<Plan> {
+    const url = environment.planBackendUrl + `/plan`
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.post<Plan>(url, plan, httpOptions)
+  }
 }
