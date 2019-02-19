@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  planBackendUrl: "/api"
+  planBackendPath: "/api"
 };
 
 /*

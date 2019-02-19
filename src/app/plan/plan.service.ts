@@ -13,24 +13,32 @@ export class PlanService {
   constructor(private http: HttpClient) { }
 
   getPlan(planId: String): Observable<Plan> {
-    const url = environment.planBackendUrl + `/plan/${planId}`
+    const path = environment.planBackendPath + `/plan/${planId}`
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.get<Plan>(url, httpOptions);
+    return this.http.get<Plan>(path, httpOptions);
   }
 
-
-
-  saveOrUpdatePlan(plan: Plan): Observable<Plan> {
-    const url = environment.planBackendUrl + `/plan`
+  updatePlan(plan: Plan, planId: String): Observable<Plan> {
+    const path = environment.planBackendPath + `/plan/${planId}`
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<Plan>(url, plan, httpOptions)
+    return this.http.put<Plan>(path, plan, httpOptions)
+  }
+
+  savePlan(plan: Plan): Observable<Plan> {
+    const path = environment.planBackendPath + `/plan`
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.post<Plan>(path, plan, httpOptions)
   }
 }

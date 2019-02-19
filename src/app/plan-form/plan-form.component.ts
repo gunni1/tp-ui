@@ -30,12 +30,16 @@ export class PlanFormComponent implements OnInit {
     this.initEmptyForm()
     this.route.paramMap.subscribe(params => {
       this.modelId = params.get('planId') || null
-      if (this.modelId !== null) {
+      if (this.isInEditMode()) {
         this.initWithPlanId(this.modelId)
       }
     });
 
 
+  }
+
+  private isInEditMode() {
+    return this.modelId !== null
   }
 
   private initWithPlanId(planId: string) {
@@ -92,11 +96,18 @@ export class PlanFormComponent implements OnInit {
   private onSubmit() {
 
     let practices = this.getPractices()
-    let plan = new Plan(this.modelId, this.form.get('title').value, practices)
-    this.planService.saveOrUpdatePlan(plan).subscribe(
-      plan => console.log('success'),
-      error1 => handleError(error1)
-    )
+    let plan = new Plan(this.form.get('title').value, practices)
+    if (this.isInEditMode()) {
+      this.planService.updatePlan(plan, this.modelId).subscribe(
+        plan => console.log('success'),
+        error1 => handleError(error1)
+      )
+    } else {
+      this.planService.savePlan(plan).subscribe(
+        plan => console.log('success'),
+        error1 => handleError(error1)
+      )
+    }
   }
 
 
