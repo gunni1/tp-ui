@@ -95,7 +95,6 @@ export class PlanFormComponent implements OnInit {
   }
 
   private onSubmit() {
-
     let practices = this.getPractices()
     let plan = new Plan("",this.form.get('title').value, this.creatorUserName, practices)
     if (this.isInEditMode()) {
@@ -109,6 +108,8 @@ export class PlanFormComponent implements OnInit {
         error1 => handleError(error1)
       )
     }
+    console.log("blabla")
+    this.router.navigate(['/my-plans'])
   }
 
 
