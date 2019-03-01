@@ -14,9 +14,10 @@ import {Plan} from "../plan/plan";
 })
 export class PlanFormComponent implements OnInit {
 
+  //TODO: Platzhalter bis Benutzerverwaltung existiert
+  creatorUserName = "user1"
+
   form: FormGroup;
-
-
   modelId: string
 
   constructor(
@@ -96,7 +97,7 @@ export class PlanFormComponent implements OnInit {
   private onSubmit() {
 
     let practices = this.getPractices()
-    let plan = new Plan(this.form.get('title').value, practices)
+    let plan = new Plan("",this.form.get('title').value, this.creatorUserName, practices)
     if (this.isInEditMode()) {
       this.planService.updatePlan(plan, this.modelId).subscribe(
         plan => console.log('success'),

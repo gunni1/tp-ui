@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Plan} from "../plan/plan";
+import {PlanService} from "../plan/plan.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {handleError} from "../helpers";
 
 @Component({
   selector: 'app-my-plans',
@@ -7,9 +11,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyPlansComponent implements OnInit {
 
-  constructor() { }
+  plans: Plan[] = []
+  userIdDummy = "user1"
+
+  constructor(
+    private planService: PlanService,
+    private router: Router,) { }
 
   ngOnInit() {
+    this.planService.getUsersPlans(this.userIdDummy).subscribe(
+      plans => {
+        this.plans = plans
+      },
+      error => {
+        handleError(error)
+      }
+    )
   }
 
 }
