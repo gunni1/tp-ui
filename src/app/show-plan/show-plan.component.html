@@ -1,5 +1,40 @@
 <div class="container">
 
+  <mat-card>
+    <mat-card-title-group>
+      <mat-card-title>{{plan.title}}</mat-card-title>
+      <mat-checkbox labelPosition="before" class="float-right"
+        [checked]="isFavorite" (change)="favoriteChanged()">Favorit</mat-checkbox>
+    </mat-card-title-group>
+    <mat-card-content>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Übung</th>
+            <th scope="col">Wiederholungen / Dauer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let practice of plan.practices">
+            <td>{{practice.name}}</td>
+            <td>{{practice.quantity}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-primary" [routerLinkActive]="['active']" [routerLink]="['/edit-plan', plan.id]">Plan bearbeiten</button>
+        </div>
+      </div>
+
+    </mat-card-actions>
+    <mat-card-footer>
+      <mat-label class="float-right">Trainingsplan von {{plan.createdBy}}</mat-label>
+    </mat-card-footer>
+
+  </mat-card>
 
 </div>
 

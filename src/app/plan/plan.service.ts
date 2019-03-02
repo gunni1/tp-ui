@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Plan} from "./plan";
 import {Practice} from "./practice";
 import {environment} from "../../environments/environment";
+import {handleError} from "../helpers";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,25 @@ export class PlanService {
   }
 
   getUsersPlans(userId: String): Observable<Plan[]> {
-    const path = environment.planBackendPath + `userplans/${userId}`
+    const path = environment.planBackendPath + `/userplans/${userId}`
     return this.http.get<Plan[]>(path, this.httpOptionsJsonResult)
   }
+
+  addFavorite(userId: string, planId: string): Observable<string[]> {
+    const path = environment.planBackendPath + `/userfav/${userId}/plan`
+    let addFavoriteJson = {planId: planId};
+    return this.http.post<string[]>(path,addFavoriteJson, this.httpOptionsJsonResult)
+  }
+
+  removeFavorite(userId: string, planId: string): Observable<string[]> {
+    const path = environment.planBackendPath + `/userfav/${userId}/plan/${planId}`
+    return this.http.delete<string[]>(path, this.httpOptionsJsonResult)
+  }
+
+  getUserFavoritePlanIds(userId: string): Observable<string[]> {
+    const path = environment.planBackendPath + `/userfav/${userId}`
+    return this.http.get<string[]>(path, this.httpOptionsJsonResult)
+  }
+
+
 }

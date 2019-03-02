@@ -108,7 +108,6 @@ export class PlanFormComponent implements OnInit {
         error1 => handleError(error1)
       )
     }
-    console.log("blabla")
     this.router.navigate(['/my-plans'])
   }
 
