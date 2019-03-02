@@ -52,7 +52,16 @@ export class PlanService {
 
   getUserFavoritePlanIds(userId: string): Observable<string[]> {
     const path = environment.planBackendPath + `/userfav/${userId}`
-    return this.http.get<string[]>(path, this.httpOptionsJsonResult)
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
+      params: {"onlyIds": "true"}
+    };
+    return this.http.get<string[]>(path, httpOptions)
+  }
+
+  getUserFavoritePlans(userId: string): Observable<Plan[]> {
+    const path = environment.planBackendPath + `/userfav/${userId}`
+    return this.http.get<Plan[]>(path, this.httpOptionsJsonResult)
   }
 
 

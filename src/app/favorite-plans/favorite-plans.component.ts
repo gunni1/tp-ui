@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {handleError} from "../helpers";
 
 @Component({
-  selector: 'app-my-plans',
-  templateUrl: './my-plans.component.html',
-  styleUrls: ['./my-plans.component.css']
+  selector: 'app-favorite-plans',
+  templateUrl: './favorite-plans.component.html',
+  styleUrls: ['./favorite-plans.component.css']
 })
-export class MyPlansComponent implements OnInit {
+export class FavoritePlansComponent implements OnInit {
 
   plans: Plan[] = []
   userIdDummy = "user1"
@@ -18,7 +17,7 @@ export class MyPlansComponent implements OnInit {
     private planService: PlanService) { }
 
   ngOnInit() {
-    this.planService.getUsersPlans(this.userIdDummy).subscribe(
+    this.planService.getUserFavoritePlans(this.userIdDummy).subscribe(
       plans => {
         this.plans = plans
       },
@@ -27,5 +26,4 @@ export class MyPlansComponent implements OnInit {
       }
     )
   }
-
 }

@@ -9,12 +9,15 @@ import { MyPlansComponent } from './my-plans/my-plans.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatCardModule, MatCheckboxModule, MatInputModule, MatListModule} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
+import { PlanListComponent } from './plan-list/plan-list.component';
+import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
 
 
 const routes: Routes = [
   { path: 'edit-plan/:planId', component: PlanFormComponent },
   { path: 'new-plan', component: PlanFormComponent },
   { path: 'my-plans', component: MyPlansComponent },
+  { path: 'fav-plans', component: FavoritePlansComponent},
   { path: 'plan/:planId', component: ShowPlanComponent },
   { path: '', pathMatch: 'full', redirectTo: '/my-plans' },
   { path: '**', redirectTo: '/my-plans' }
@@ -25,7 +28,9 @@ const routes: Routes = [
     AppComponent,
     PlanFormComponent,
     ShowPlanComponent,
-    MyPlansComponent
+    MyPlansComponent,
+    PlanListComponent,
+    FavoritePlansComponent
   ],
   imports: [
     BrowserModule,HttpClientModule,
