@@ -1,9 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">PLAN-APP</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler"
+          type="button"
+          (click)="isCollapsed = !isCollapsed"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <div class="collapse navbar-collapse" id="navbarNav" [ngbCollapse]="isCollapsed" >
     <div class="navbar-nav">
       <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="/my-plans">Meine Trainingspläne</a>
       <a class="nav-item nav-link" [routerLinkActive]="['active']" routerLink="/fav-plans">Meine Favoriten</a>

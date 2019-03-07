@@ -20,11 +20,14 @@
               </div>
               <div class="col-4">
                 <mat-form-field>
-                  <input matInput placeholder="Wiederholungen / Dauer" formControlName="quantity">
+                  <input matInput placeholder="Wdh / Dauer" formControlName="quantity">
                 </mat-form-field>
               </div>
-              <div class="col-1">
-                <button (click)="removePracticeControls(practicesIndex)" type="button" class="btn btn-secondary float-right">X</button>
+              <div class="col-sm-1 ">
+                <button (click)="removePracticeControls(practicesIndex)" type="button" class="close" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <!-- button (click)="removePracticeControls(practicesIndex)" type="button" class="btn btn-sm btn-secondary float-right">X</button> -->
               </div>
             </div>
 

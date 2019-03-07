@@ -11,6 +11,7 @@ import {MatCardModule, MatCheckboxModule, MatInputModule, MatListModule} from "@
 import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
 import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,HttpClientModule,
     BrowserAnimationsModule,
+    NgbModule,
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
