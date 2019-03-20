@@ -17,7 +17,8 @@ export class PlanFormComponent implements OnInit {
   //TODO: Platzhalter bis Benutzerverwaltung existiert
   creatorUserName = "user1"
 
-  form: FormGroup;
+  form = this.getEmptyForm()
+
   modelId: string
 
   constructor(
@@ -28,7 +29,6 @@ export class PlanFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initEmptyForm()
     this.route.paramMap.subscribe(params => {
       this.modelId = params.get('planId') || null
       if (this.isInEditMode()) {
@@ -72,8 +72,12 @@ export class PlanFormComponent implements OnInit {
     return result
   }
 
+  getPracticesFormArray () {
+    return this.form.get('practices') as FormArray
+  }
+
   private getPractices(): Practice[] {
-    let practiceFormArray = this.form.get('practices') as FormArray
+    let practiceFormArray = this.getPracticesFormArray()
     let practices = []
     for (let i=0; i < practiceFormArray.length; i++) {
       let formGroup = practiceFormArray.at(i)
@@ -82,8 +86,8 @@ export class PlanFormComponent implements OnInit {
     return practices
   }
 
-  private initEmptyForm() {
-    this.form = this.formBuilder.group({
+  private getEmptyForm() : FormGroup{
+    return this.formBuilder.group({
       title: this.formBuilder.control(''),
       practices: this.formBuilder.array([
         this.formBuilder.group({
@@ -94,7 +98,7 @@ export class PlanFormComponent implements OnInit {
     });
   }
 
-  private onSubmit() {
+  onSubmit() {
     let practices = this.getPractices()
     let plan = new Plan("",this.form.get('title').value, this.creatorUserName, practices)
     if (this.isInEditMode()) {
@@ -112,7 +116,7 @@ export class PlanFormComponent implements OnInit {
   }
 
 
-  private addPracticeControls() {
+  addPracticeControls() {
     let control = this.form.get('practices') as FormArray
     //let control = <FormArray>this.form.controls.practices;
     control.push(
@@ -123,7 +127,7 @@ export class PlanFormComponent implements OnInit {
     )
   }
 
-  private removePracticeControls(index: number) {
+  removePracticeControls(index: number) {
     let control = this.form.get('practices') as FormArray
     control.removeAt(index);
   }

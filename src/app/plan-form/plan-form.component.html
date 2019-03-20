@@ -11,7 +11,7 @@
           </div>
         </div>
         <div formArrayName="practices">
-          <div *ngFor="let practice of form.get('practices').controls; let practicesIndex=index">
+          <div *ngFor="let practice of getPracticesFormArray().controls; let practicesIndex=index">
             <div [formGroupName]="practicesIndex" class="row">
               <div class="col-7">
                 <mat-form-field>
@@ -27,10 +27,8 @@
                 <button (click)="removePracticeControls(practicesIndex)" type="button" class="close" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <!-- button (click)="removePracticeControls(practicesIndex)" type="button" class="btn btn-sm btn-secondary float-right">X</button> -->
               </div>
             </div>
-
           </div>
         </div>
       </form>
@@ -44,12 +42,8 @@
           <button (click)="addPracticeControls()" type="button" class="btn btn-primary float-right">weitere Übung</button>
         </div>
       </div>
-
     </mat-card-actions>
   </mat-card>
-
-
-
 </div>
 
 
