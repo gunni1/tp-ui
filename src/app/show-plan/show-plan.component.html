@@ -25,10 +25,14 @@
     <mat-card-actions>
       <div class="row">
         <div class="col">
-          <button type="button" class="btn btn-primary"
+          <button type="button" class="btn btn-secondary"
                   *ngIf="isOwnPlan()"
                   [routerLinkActive]="['active']"
                   [routerLink]="['/edit-plan', plan.id]">Plan bearbeiten</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-link float-right"
+                  (click)="copyToClipboard()">Link kopieren</button>
         </div>
       </div>
 

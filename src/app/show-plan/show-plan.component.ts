@@ -40,6 +40,15 @@ export class ShowPlanComponent implements OnInit {
     })
   }
 
+  copyToClipboard() {
+    document.addEventListener('copy', (clipEvent: ClipboardEvent) => {
+      clipEvent.clipboardData.setData('text/plain', window.location.href);
+      clipEvent.preventDefault();
+      document.removeEventListener('copy', null);
+    });
+    document.execCommand('copy');
+  }
+
   isOwnPlan() {
     return this.plan.createdBy === this.userName
   }
