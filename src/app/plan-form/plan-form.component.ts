@@ -6,6 +6,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {switchMap} from "rxjs/operators";
 import {handleError} from "../helpers";
 import {Plan} from "../plan/plan";
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -13,12 +14,8 @@ import {Plan} from "../plan/plan";
   styleUrls: ['./plan-form.component.css']
 })
 export class PlanFormComponent implements OnInit {
-
-  //TODO: Platzhalter bis Benutzerverwaltung existiert
-  creatorUserName = "user1"
-
+  userName = ""
   form = this.getEmptyForm()
-
   modelId: string
 
   constructor(
@@ -26,17 +23,18 @@ export class PlanFormComponent implements OnInit {
     private planService: PlanService,
     private route: ActivatedRoute,
     private router: Router,
+    protected keycloakAngular: KeycloakService
   ) { }
 
   ngOnInit() {
+    let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    userProfilePromise.then(profile => this.userName = profile.username)
     this.route.paramMap.subscribe(params => {
       this.modelId = params.get('planId') || null
       if (this.isInEditMode()) {
         this.initWithPlanId(this.modelId)
       }
     });
-
-
   }
 
   private isInEditMode() {
@@ -100,7 +98,7 @@ export class PlanFormComponent implements OnInit {
 
   onSubmit() {
     let practices = this.getPractices()
-    let plan = new Plan("",this.form.get('title').value, this.creatorUserName, practices)
+    let plan = new Plan("",this.form.get('title').value, this.userName, practices)
     if (this.isInEditMode()) {
       this.planService.updatePlan(plan, this.modelId).subscribe(
         plan => console.log('success'),

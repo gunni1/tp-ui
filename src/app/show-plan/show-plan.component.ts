@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-show-plan',
@@ -12,7 +13,7 @@ import {handleError} from "../helpers";
 })
 export class ShowPlanComponent implements OnInit {
 
-  activeUserId = "user1"
+  userName = ""
 
   isFavorite = false
   plan: Plan
@@ -20,26 +21,35 @@ export class ShowPlanComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private planService: PlanService,
-    private router: Router
+    private router: Router,
+    protected keycloakAngular: KeycloakService
   ) { }
 
   ngOnInit() {
     this.plan = new Plan("","","",[])
-    this.route.paramMap.subscribe(params => {
-      var modelId = params.get('planId') || null
-      if (modelId !== null) {
-        this.initPlan(modelId)
-        this.initFavorite(modelId, this.activeUserId)
-      }
-    });
+    let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    userProfilePromise.then(profile => this.userName = profile.username)
+    userProfilePromise.then(profile => {
+      this.route.paramMap.subscribe(params => {
+        var modelId = params.get('planId') || null
+        if (modelId !== null) {
+          this.initPlan(modelId)
+          this.initFavorite(modelId, profile.username)
+        }
+      });
+    })
+  }
+
+  isOwnPlan() {
+    return this.plan.createdBy === this.userName
   }
 
   favoriteChanged() {
     if(this.isFavorite) {
-      this.removeFavorite(this.activeUserId, this.plan.id)
+      this.removeFavorite(this.userName, this.plan.id)
     }
     else {
-      this.addFavorite(this.activeUserId, this.plan.id)
+      this.addFavorite(this.userName, this.plan.id)
     }
 
   }

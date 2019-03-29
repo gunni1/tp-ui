@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PlanFormComponent } from './plan-form/plan-form.component';
@@ -12,10 +12,13 @@ import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
 import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import {initializer} from "./app-init";
+
 
 
 const routes: Routes = [
-  { path: 'edit-plan/:planId', component: PlanFormComponent },
+  { path: 'edit-plan/:planId', component: PlanFormComponent},
   { path: 'new-plan', component: PlanFormComponent },
   { path: 'my-plans', component: MyPlansComponent },
   { path: 'fav-plans', component: FavoritePlansComponent},
@@ -34,14 +37,21 @@ const routes: Routes = [
     FavoritePlansComponent
   ],
   imports: [
-    BrowserModule,HttpClientModule,
-    BrowserAnimationsModule,
+    BrowserModule,HttpClientModule,BrowserAnimationsModule,
+    KeycloakAngularModule,
     NgbModule,
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      multi: true,
+      deps: [KeycloakService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

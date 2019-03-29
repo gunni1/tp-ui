@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
+import {Router} from "@angular/router";
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-favorite-plans',
@@ -11,19 +13,23 @@ import {handleError} from "../helpers";
 export class FavoritePlansComponent implements OnInit {
 
   plans: Plan[] = []
-  userIdDummy = "user1"
+  userName = ""
 
   constructor(
-    private planService: PlanService) { }
+    private planService: PlanService,
+    protected keycloakAngular: KeycloakService) { }
 
   ngOnInit() {
-    this.planService.getUserFavoritePlans(this.userIdDummy).subscribe(
+    let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    userProfilePromise.then(profile => this.userName = profile.username)
+    userProfilePromise.then(profile => this.planService.getUserFavoritePlans(profile.username).subscribe(
       plans => {
         this.plans = plans
       },
       error => {
         handleError(error)
       }
-    )
+    ))
+
   }
 }
