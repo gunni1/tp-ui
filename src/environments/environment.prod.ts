@@ -3,7 +3,7 @@
 import { KeycloakConfig } from 'keycloak-angular';
 
 let keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8081/auth',
+  url: 'https://gunni.1qay.net/auth',
   realm: 'plan',
   clientId: 'plan-ui'
 };
