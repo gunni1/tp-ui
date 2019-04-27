@@ -1,0 +1,35 @@
+version: '3.2'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: gateway
+    depends_on:
+      - plan-ui
+      - plan-api
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  plan-ui:
+    image: gunni1/tp-ui:0.3
+    container_name: plan-ui
+  plan-api:
+    image: gunni1/plan-api:1.0.0
+    container_name: plan-api
+    environment:
+      PLAN_DB_URL: mongodb://mongodb:27017
+  mongodb:
+    image: mongo:3.6
+    container_name: plan-db
+    volumes:
+      - ./data/db:/data/db
+      - ./data/configdb:/data/configdb

@@ -4,7 +4,7 @@
 import { KeycloakConfig } from 'keycloak-angular';
 
 let keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost/auth',
+  url: 'http://localhost:8089/auth',
   realm: 'plan',
   clientId: 'plan-ui'
 };
