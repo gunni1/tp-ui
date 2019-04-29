@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Practice} from "../plan/practice";
 import {PlanService} from "../plan/plan.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
@@ -116,7 +116,6 @@ export class PlanFormComponent implements OnInit {
 
   addPracticeControls() {
     let control = this.form.get('practices') as FormArray
-    //let control = <FormArray>this.form.controls.practices;
     control.push(
       this.formBuilder.group({
         name: this.formBuilder.control(''),
@@ -125,9 +124,21 @@ export class PlanFormComponent implements OnInit {
     )
   }
 
+  addPracticeControlAfter(index: number) {
+    let control = this.form.get('practices') as FormArray
+    control.insert(index +1 , this.newPracticeControl())
+  }
+
   removePracticeControls(index: number) {
     let control = this.form.get('practices') as FormArray
     control.removeAt(index);
   }
 
+
+  private newPracticeControl(): AbstractControl {
+    return this.formBuilder.group({
+      name: this.formBuilder.control(''),
+      quantity: this.formBuilder.control('')
+    })
+  }
 }

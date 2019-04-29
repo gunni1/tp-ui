@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 
+/compose/local/data
+
 # dependencies
 /node_modules
 
