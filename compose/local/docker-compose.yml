@@ -15,7 +15,7 @@ services:
     image: gunni1/tp-ui:0.3
     container_name: plan-ui
   plan-api:
-    image: gunni1/plan-api:1.0.0
+    image: gunni1/plan-api:1.1.0
     container_name: plan-api
     ports:
       - "8080:8080"
@@ -24,6 +24,8 @@ services:
   mongodb:
     image: mongo:3.6
     container_name: plan-db
+    ports:
+      - "27017:27017"
     volumes:
       - ./data/db:/data/db
       - ./data/configdb:/data/configdb

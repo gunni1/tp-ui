@@ -7,7 +7,7 @@ import { ShowPlanComponent } from './show-plan/show-plan.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyPlansComponent } from './my-plans/my-plans.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatCardModule, MatCheckboxModule, MatInputModule, MatListModule} from "@angular/material";
+import {MatCardModule, MatCheckboxModule, MatInputModule, MatListModule, MatSnackBarModule} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
 import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
@@ -40,7 +40,7 @@ const routes: Routes = [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
     KeycloakAngularModule,
     NgbModule,
-    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,
+    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],

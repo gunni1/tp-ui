@@ -5,6 +5,7 @@ import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
 import {KeycloakService} from "keycloak-angular";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-show-plan',
@@ -19,6 +20,7 @@ export class ShowPlanComponent implements OnInit {
   plan: Plan
 
   constructor(
+    private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private planService: PlanService,
     private router: Router,
@@ -47,6 +49,9 @@ export class ShowPlanComponent implements OnInit {
       document.removeEventListener('copy', null);
     });
     document.execCommand('copy');
+    this.snackBar.open("Link in Zwischenablage kopiert...","", {
+      duration: 2000
+    });
   }
 
   isOwnPlan() {
