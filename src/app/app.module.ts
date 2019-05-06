@@ -3,11 +3,18 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { PlanFormComponent } from './plan-form/plan-form.component';
-import { ShowPlanComponent } from './show-plan/show-plan.component';
+import {ShowPlanBottomSheet, ShowPlanComponent} from './show-plan/show-plan.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyPlansComponent } from './my-plans/my-plans.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatCardModule, MatCheckboxModule, MatInputModule, MatListModule, MatSnackBarModule} from "@angular/material";
+import {
+  MatBottomSheetModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatListModule,
+  MatSnackBarModule
+} from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
 import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
@@ -34,16 +41,18 @@ const routes: Routes = [
     ShowPlanComponent,
     MyPlansComponent,
     PlanListComponent,
-    FavoritePlansComponent
+    FavoritePlansComponent,
+    ShowPlanBottomSheet
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
     KeycloakAngularModule,
     NgbModule,
-    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,
+    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
+  entryComponents: [ShowPlanBottomSheet],
   providers: [
     {
       provide: APP_INITIALIZER,

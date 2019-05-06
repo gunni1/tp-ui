@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Practice} from "../plan/practice";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
 import {KeycloakService} from "keycloak-angular";
-import {MatSnackBar} from "@angular/material";
+import {MatBottomSheet, MatBottomSheetRef, MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-show-plan',
@@ -24,7 +23,8 @@ export class ShowPlanComponent implements OnInit {
     private route: ActivatedRoute,
     private planService: PlanService,
     private router: Router,
-    protected keycloakAngular: KeycloakService
+    protected keycloakAngular: KeycloakService,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   ngOnInit() {
@@ -112,4 +112,38 @@ export class ShowPlanComponent implements OnInit {
     )
   }
 
+
+  openBottomSheet() {
+    this.bottomSheet.open(ShowPlanBottomSheet)
+  }
+}
+
+@Component({
+  selector: 'show-plan-bottom-sheet',
+  templateUrl: 'show-plan-bottom-sheet.html',
+})
+export class ShowPlanBottomSheet {
+  constructor(private bottomSheetRef: MatBottomSheetRef<ShowPlanBottomSheet>) {}
+
+  isOwnPlan(): boolean {
+    return true;
+  }
+
+  toEditPage() {
+    console.log("take me to edit!")
+  }
+
+  deletePlan() {
+    console.log("delete it!")
+  }
+
+  copyAsOwnPlan() {
+    console.log("copy and take me to edit mode!")
+  }
+
+  openLink(event: MouseEvent): void {
+    this.bottomSheetRef.dismiss();
+
+    //event.preventDefault();
+  }
 }

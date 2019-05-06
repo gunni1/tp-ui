@@ -24,10 +24,14 @@
     <mat-card-actions>
       <div class="row">
         <div class="col">
+          <!--
           <button type="button" class="btn btn-info"
                   *ngIf="isOwnPlan()"
                   [routerLinkActive]="['active']"
                   [routerLink]="['/edit-plan', plan.id]">Plan bearbeiten</button>
+          -->
+          <button type="button" class="btn btn-info"
+                  (click)="openBottomSheet()">Plan...</button>
         </div>
         <div class="col">
           <button type="button" class="btn btn-link float-right"
