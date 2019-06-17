@@ -1,0 +1,17 @@
+<mat-nav-list>
+  <a *ngIf="isOwnPlan()" mat-list-item (click)="toEditPage()">
+    <span mat-line>Trainingplan bearbeiten</span>
+    <span mat-line></span>
+  </a>
+
+  <a *ngIf="!isOwnPlan()" mat-list-item (click)="copyAsOwnPlan()">
+    <span mat-line>Als eigenen Trainingsplan kopieren</span>
+    <span mat-line></span>
+  </a>
+
+  <a *ngIf="isOwnPlan()" mat-list-item (click)="deletePlan()">
+    <span mat-line>Trainingsplan löschen</span>
+    <span mat-line>Entfernt den Trainingsplan unwiederruflich.</span>
+  </a>
+
+</mat-nav-list>

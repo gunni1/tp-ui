@@ -10,6 +10,7 @@ export class PlanAuthGuard extends KeycloakAuthGuard {
 
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
+
       if (!this.authenticated) {
         this.keycloakAngular.login();
         return;
@@ -19,4 +20,5 @@ export class PlanAuthGuard extends KeycloakAuthGuard {
 
     });
   }
+
 }
