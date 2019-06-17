@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
 import {KeycloakService} from "keycloak-angular";
-import {MatBottomSheet, MatBottomSheetRef, MatSnackBar} from "@angular/material";
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetRef, MatSnackBar} from "@angular/material";
 
 @Component({
   selector: 'app-show-plan',
@@ -114,7 +114,7 @@ export class ShowPlanComponent implements OnInit {
 
 
   openBottomSheet() {
-    this.bottomSheet.open(ShowPlanBottomSheet)
+    this.bottomSheet.open(ShowPlanBottomSheet, {data: {planId: this.plan.id}})
   }
 }
 
@@ -123,14 +123,24 @@ export class ShowPlanComponent implements OnInit {
   templateUrl: 'show-plan-bottom-sheet.html',
 })
 export class ShowPlanBottomSheet {
-  constructor(private bottomSheetRef: MatBottomSheetRef<ShowPlanBottomSheet>) {}
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef<ShowPlanBottomSheet>,
+    private router: Router,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
+  ) {
+    this.planId = data.planId
+  }
+
+  planId
 
   isOwnPlan(): boolean {
     return true;
   }
 
   toEditPage() {
-    console.log("take me to edit!")
+    console.log("edit plan: " + this.planId)
+    this.router.navigateByUrl("edit-plan/" + this.planId)
+    this.bottomSheetRef.dismiss();
   }
 
   deletePlan() {

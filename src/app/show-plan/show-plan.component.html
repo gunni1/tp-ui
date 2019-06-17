@@ -2,8 +2,17 @@
   <mat-card>
     <mat-card-title-group>
       <mat-card-title>{{plan.title}}</mat-card-title>
-      <mat-checkbox labelPosition="before" class="float-right"
-        [checked]="isFavorite" (change)="favoriteChanged()">Favorit</mat-checkbox>
+      <div class="row">
+        <div class="col">
+          <img class="btn-link copy-icon float-right" src="assets/icon/copy.png" (click)="copyToClipboard()">
+        </div>
+        <div class="col">
+          <mat-checkbox labelPosition="before" class="float-right"
+                        [checked]="isFavorite" (change)="favoriteChanged()">Favorit</mat-checkbox>
+        </div>
+
+      </div>
+
     </mat-card-title-group>
     <mat-card-content>
       <table class="table">
@@ -29,14 +38,19 @@
                   *ngIf="isOwnPlan()"
                   [routerLinkActive]="['active']"
                   [routerLink]="['/edit-plan', plan.id]">Plan bearbeiten</button>
+           <button type="button" class="btn btn-info"
+                  (click)="openBottomSheet()">...</button>
           -->
-          <button type="button" class="btn btn-info"
-                  (click)="openBottomSheet()">Plan...</button>
+
+          <img class="gear-icon btn-link float-right" src="assets/icon/gear.png" (click)="openBottomSheet()">
+
         </div>
+        <!--
         <div class="col">
           <button type="button" class="btn btn-link float-right"
                   (click)="copyToClipboard()">Link kopieren</button>
         </div>
+        -->
       </div>
     </mat-card-actions>
 
