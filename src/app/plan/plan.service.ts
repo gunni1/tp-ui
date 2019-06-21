@@ -29,6 +29,11 @@ export class PlanService {
     return this.http.put<Plan>(path, plan, this.httpOptionsJsonResult)
   }
 
+  deletePlan(planId: String): Observable<Plan> {
+    const path = environment.planBackendPath + `/plan/${planId}`
+    return this.http.delete<Plan>(path, this.httpOptionsJsonResult)
+  }
+
   savePlan(plan: Plan): Observable<Plan> {
     const path = environment.planBackendPath + `/plan`
     return this.http.post<Plan>(path, plan, this.httpOptionsJsonResult)

@@ -9,7 +9,7 @@
     <span mat-line></span>
   </a>
 
-  <a *ngIf="isOwnPlan()" mat-list-item (click)="deletePlan()">
+  <a *ngIf="isOwnPlan()" mat-list-item class="border border-danger" (click)="deletePlan()" >
     <span mat-line>Trainingsplan löschen</span>
     <span mat-line>Entfernt den Trainingsplan unwiederruflich.</span>
   </a>

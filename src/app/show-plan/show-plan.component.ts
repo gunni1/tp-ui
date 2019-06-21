@@ -112,7 +112,6 @@ export class ShowPlanComponent implements OnInit {
     )
   }
 
-
   openBottomSheet() {
     this.bottomSheet.open(ShowPlanBottomSheet, {data: {planId: this.plan.id}})
   }
@@ -126,25 +125,37 @@ export class ShowPlanBottomSheet {
   constructor(
     private bottomSheetRef: MatBottomSheetRef<ShowPlanBottomSheet>,
     private router: Router,
+    private planService: PlanService,
+    private snackBar: MatSnackBar,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) {
     this.planId = data.planId
   }
 
-  planId
+  planId;
 
   isOwnPlan(): boolean {
     return true;
   }
 
   toEditPage() {
-    console.log("edit plan: " + this.planId)
     this.router.navigateByUrl("edit-plan/" + this.planId)
     this.bottomSheetRef.dismiss();
   }
 
   deletePlan() {
-    console.log("delete it!")
+    this.planService.deletePlan(this.planId).subscribe(
+      deletedPlan => {
+        this.router.navigateByUrl("my-plans");
+        this.bottomSheetRef.dismiss();
+        this.snackBar.open("Trainingsplan gelöscht.","", {
+          duration: 2000
+        });
+      },
+      error => {
+        handleError(error)
+      }
+    )
   }
 
   copyAsOwnPlan() {
