@@ -23,7 +23,7 @@ services:
     image: gunni1/tp-ui:0.3
     container_name: plan-ui
   plan-api:
-    image: gunni1/plan-api:1.0.0
+    image: gunni1/plan-api:1.2.0
     container_name: plan-api
     environment:
       PLAN_DB_URL: mongodb://mongodb:27017

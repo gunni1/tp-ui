@@ -7,6 +7,8 @@
           <div class="col-4">
             <mat-form-field>
               <input matInput placeholder="Titel" formControlName="title"  >
+              <mat-error *ngIf="formControlIsReadyWithErrors('title') && form.get('title').errors.required">Ein Titel muss angegeben werden.</mat-error>
+              <mat-error *ngIf="formControlIsReadyWithErrors('title') && form.get('title').errors.titleAlreadyExists">Titel existiert bereits.</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -45,9 +47,8 @@
     </mat-card-content>
     <mat-card-actions>
       <div class="row">
-
         <div class="col">
-          <button (click)="addPracticeControls()" type="button" class="btn btn-outline-info ">weitere Übung</button>
+          <back-button></back-button>
         </div>
         <div class="col">
           <button (click)="onSubmit()" type="button" class="btn btn-success float-right">Plan speichern</button>

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Practice} from "../plan/practice";
 import {PlanService} from "../plan/plan.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
@@ -7,6 +7,9 @@ import {switchMap} from "rxjs/operators";
 import {handleError} from "../helpers";
 import {Plan} from "../plan/plan";
 import {KeycloakService} from "keycloak-angular";
+import {MatSnackBar} from "@angular/material";
+import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
+import {isDefined} from "@ng-bootstrap/ng-bootstrap/util/util";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -23,6 +26,7 @@ export class PlanFormComponent implements OnInit {
     private planService: PlanService,
     private route: ActivatedRoute,
     private router: Router,
+    private snackBar: MatSnackBar,
     protected keycloakAngular: KeycloakService
   ) { }
 
@@ -37,6 +41,11 @@ export class PlanFormComponent implements OnInit {
     });
   }
 
+  formControlIsReadyWithErrors(formControlId: string): boolean {
+    let control = this.form.get(formControlId)
+    return control != null && control.touched && control.errors != null
+  }
+
   private isInEditMode() {
     return this.modelId !== null
   }
@@ -45,7 +54,7 @@ export class PlanFormComponent implements OnInit {
     this.planService.getPlan(planId).subscribe(
       plan => {
         this.form = this.formBuilder.group({
-          title: this.formBuilder.control(plan.title),
+          title: this.formBuilder.control(plan.title, [Validators.required]),
           practices: this.asFormArray(plan.practices)
         })
       },
@@ -101,16 +110,25 @@ export class PlanFormComponent implements OnInit {
     let plan = new Plan("",this.form.get('title').value, this.userName, practices)
     if (this.isInEditMode()) {
       this.planService.updatePlan(plan, this.modelId).subscribe(
-        plan => console.log('success'),
-        error1 => handleError(error1)
+        plan => {
+          this.showNotification(plan.title + " aktualisiert")
+          this.router.navigateByUrl("my-plans")
+        },
+        error => handleError(error)
       )
     } else {
       this.planService.savePlan(plan).subscribe(
-        plan => console.log('success'),
-        error1 => handleError(error1)
+        plan => {
+          this.showNotification(plan.title + " gespeichert")
+          this.router.navigateByUrl("my-plans")
+        },
+        error => {
+          this.handleFormError(error)
+
+        }
       )
     }
-    this.router.navigate(['/my-plans'])
+
   }
 
 
@@ -134,12 +152,24 @@ export class PlanFormComponent implements OnInit {
     control.removeAt(index);
   }
 
+  private showNotification(text: string) {
+    this.snackBar.open(text,"", {
+      duration: 2000
+    });
+  }
 
   private newPracticeControl(): AbstractControl {
     return this.formBuilder.group({
       name: this.formBuilder.control(''),
       quantity: this.formBuilder.control('')
     })
+  }
+
+  private handleFormError(error: HttpErrorResponse) {
+    let code = error.error.error
+    if(code == "TITLE_ALREADY_EXISTS") {
+      this.form.get("title").setErrors({'titleAlreadyExists': true})
+    }
   }
 }
 

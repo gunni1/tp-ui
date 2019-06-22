@@ -21,6 +21,7 @@ import { FavoritePlansComponent } from './favorite-plans/favorite-plans.componen
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializer} from "./app-init";
+import {BackButtonComponent} from "./BackButton";
 
 
 
@@ -42,7 +43,8 @@ const routes: Routes = [
     MyPlansComponent,
     PlanListComponent,
     FavoritePlansComponent,
-    ShowPlanBottomSheet
+    ShowPlanBottomSheet,
+    BackButtonComponent
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
