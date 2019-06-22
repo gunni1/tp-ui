@@ -54,7 +54,7 @@ export class PlanFormComponent implements OnInit {
     this.planService.getPlan(planId).subscribe(
       plan => {
         this.form = this.formBuilder.group({
-          title: this.formBuilder.control(plan.title, [Validators.required]),
+          title: this.formBuilder.control(plan.title, Validators.required),
           practices: this.asFormArray(plan.practices)
         })
       },
@@ -95,7 +95,7 @@ export class PlanFormComponent implements OnInit {
 
   private getEmptyForm() : FormGroup{
     return this.formBuilder.group({
-      title: this.formBuilder.control(''),
+      title: this.formBuilder.control('',[Validators.required]),
       practices: this.formBuilder.array([
         this.formBuilder.group({
           name: this.formBuilder.control(''),
@@ -106,29 +106,31 @@ export class PlanFormComponent implements OnInit {
   }
 
   onSubmit() {
-    let practices = this.getPractices()
-    let plan = new Plan("",this.form.get('title').value, this.userName, practices)
-    if (this.isInEditMode()) {
-      this.planService.updatePlan(plan, this.modelId).subscribe(
-        plan => {
-          this.showNotification(plan.title + " aktualisiert")
-          this.router.navigateByUrl("my-plans")
-        },
-        error => handleError(error)
-      )
-    } else {
-      this.planService.savePlan(plan).subscribe(
-        plan => {
-          this.showNotification(plan.title + " gespeichert")
-          this.router.navigateByUrl("my-plans")
-        },
-        error => {
-          this.handleFormError(error)
+    if(this.form.valid) {
+      let practices = this.getPractices()
+      let plan = new Plan("", this.form.get('title').value, this.userName, practices)
 
-        }
-      )
+      if (this.isInEditMode()) {
+        this.planService.updatePlan(plan, this.modelId).subscribe(
+          plan => {
+            this.showNotification(plan.title + " aktualisiert")
+            this.router.navigateByUrl("my-plans")
+          },
+          error => handleError(error)
+        )
+      } else {
+        this.planService.savePlan(plan).subscribe(
+          plan => {
+            this.showNotification(plan.title + " gespeichert")
+            this.router.navigateByUrl("my-plans")
+          },
+          error => {
+            this.handleFormError(error)
+
+          }
+        )
+      }
     }
-
   }
 
 
