@@ -4,13 +4,16 @@
       <mat-card-title>{{plan.title}}</mat-card-title>
       <div class="row">
         <div class="col">
-          <img class="btn-link copy-icon float-right" src="assets/icon/copy.png" (click)="copyToClipboard()">
-        </div>
-        <div class="col">
           <mat-checkbox labelPosition="before" class="float-right"
                         [checked]="isFavorite" (change)="favoriteChanged()">Favorit</mat-checkbox>
         </div>
+        <div class="col">
+          <img class="btn-link plan-title-icon float-right" src="assets/icon/copy.png" (click)="copyToClipboard()">
+        </div>
 
+        <div class="col">
+          <img class="plan-title-icon btn-link float-right" src="assets/icon/gear.png" (click)="openBottomSheet()">
+        </div>
       </div>
 
     </mat-card-title-group>
@@ -41,9 +44,6 @@
            <button type="button" class="btn btn-info"
                   (click)="openBottomSheet()">...</button>
           -->
-
-          <img class="gear-icon btn-link float-right" src="assets/icon/gear.png" (click)="openBottomSheet()">
-
         </div>
         <!--
         <div class="col">

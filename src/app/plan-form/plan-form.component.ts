@@ -105,12 +105,12 @@ export class PlanFormComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(saveAsNew: boolean) {
     if(this.form.valid) {
       let practices = this.getPractices()
       let plan = new Plan("", this.form.get('title').value, this.userName, practices)
 
-      if (this.isInEditMode()) {
+      if (this.isInEditMode() && saveAsNew == false) {
         this.planService.updatePlan(plan, this.modelId).subscribe(
           plan => {
             this.showNotification(plan.title + " aktualisiert")

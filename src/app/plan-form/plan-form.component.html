@@ -51,8 +51,17 @@
           <back-button></back-button>
         </div>
         <div class="col">
-          <button (click)="onSubmit()" type="button" class="btn btn-success float-right">Plan speichern</button>
+          <div class="btn-group mr-3 float-right">
+            <button type="button" (click)="onSubmit(false)" class="btn btn-success">Plan speichern</button>
+            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+              <button class="btn btn-success dropdown-toggle-split" ngbDropdownToggle></button>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <button class="btn btn-success" (click)="onSubmit(true)" ngbDropdownItem>Als neuen Plan speichern</button>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
     </mat-card-actions>
   </mat-card>
