@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {KeycloakService} from "keycloak-angular";
 import {Router} from "@angular/router";
 
@@ -7,15 +7,27 @@ import {Router} from "@angular/router";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'tp-ui';
   isCollapsed = true;
+  isLoggedIn = false;
 
   constructor(protected keycloakAngular: KeycloakService,
               private router: Router) {
   }
 
   logout() {
-    this.keycloakAngular.logout().then(_ => this.router.navigateByUrl("/"))
+    this.isLoggedIn = false;
+    this.keycloakAngular.logout(window.location.origin).then(_ => this.router.navigateByUrl("/"))
+  }
+
+  ngOnInit(): void {
+    this.keycloakAngular.isLoggedIn().then(
+      isLoggedIn => {
+        if (isLoggedIn) {
+          this.isLoggedIn = true;
+        }
+      }
+    )
   }
 }

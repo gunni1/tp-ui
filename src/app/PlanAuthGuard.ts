@@ -11,6 +11,7 @@ export class PlanAuthGuard extends KeycloakAuthGuard {
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
 
+      console.log("logged in?")
       if (!this.authenticated) {
         this.keycloakAngular.login();
         return;

@@ -22,17 +22,20 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import {initializer} from "./app-init";
 import {BackButtonComponent} from "./BackButton";
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import {PlanAuthGuard} from "./PlanAuthGuard";
 
 
 
 const routes: Routes = [
-  { path: 'edit-plan/:planId', component: PlanFormComponent},
-  { path: 'new-plan', component: PlanFormComponent },
-  { path: 'my-plans', component: MyPlansComponent },
-  { path: 'fav-plans', component: FavoritePlansComponent},
-  { path: 'plan/:planId', component: ShowPlanComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/my-plans' },
-  { path: '**', redirectTo: '/my-plans' }
+  { path: 'home', component: LandingPageComponent},
+  { path: 'edit-plan/:planId', component: PlanFormComponent, canActivate: [PlanAuthGuard]},
+  { path: 'new-plan', component: PlanFormComponent, canActivate: [PlanAuthGuard]},
+  { path: 'my-plans', component: MyPlansComponent, canActivate: [PlanAuthGuard]},
+  { path: 'fav-plans', component: FavoritePlansComponent, canActivate: [PlanAuthGuard]},
+  { path: 'plan/:planId', component: ShowPlanComponent, canActivate: [PlanAuthGuard]},
+  { path: '', pathMatch: 'full', redirectTo: '/home' },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
@@ -44,7 +47,8 @@ const routes: Routes = [
     PlanListComponent,
     FavoritePlansComponent,
     ShowPlanBottomSheet,
-    BackButtonComponent
+    BackButtonComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
@@ -61,7 +65,7 @@ const routes: Routes = [
       useFactory: initializer,
       multi: true,
       deps: [KeycloakService]
-    }
+    },PlanAuthGuard
   ],
   bootstrap: [AppComponent]
 })
