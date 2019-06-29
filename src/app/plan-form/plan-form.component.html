@@ -38,7 +38,6 @@
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -51,7 +50,10 @@
           <back-button></back-button>
         </div>
         <div class="col">
-          <div class="btn-group mr-3 float-right">
+          <div *ngIf="!isInEditMode()" class="float-right">
+            <button type="button" class="btn btn-success " (click)="onSubmit(false)">Plan speichern</button>
+          </div>
+          <div *ngIf="isInEditMode()" class="btn-group mr-3 float-right">
             <button type="button" (click)="onSubmit(false)" class="btn btn-success">Plan speichern</button>
             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
               <button class="btn btn-success dropdown-toggle-split" ngbDropdownToggle></button>
@@ -61,7 +63,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </mat-card-actions>
   </mat-card>

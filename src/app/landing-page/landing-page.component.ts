@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {KeycloakService} from "keycloak-angular";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'app-landing-page',
@@ -13,8 +14,6 @@ export class LandingPageComponent implements OnInit {
   constructor(protected keycloakAngular: KeycloakService,
               private router: Router) {
   }
-
-
 
   ngOnInit() {
     this.keycloakAngular.isLoggedIn().then(

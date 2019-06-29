@@ -30,3 +30,5 @@ services:
         #JDBC_PARAMS: "ssl=true"
       depends_on:
         - postgres
+      volumes:
+        - ./themes/plan:/opt/jboss/keycloak/themes/plan
