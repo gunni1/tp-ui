@@ -113,7 +113,9 @@ export class ShowPlanComponent implements OnInit {
   }
 
   openBottomSheet() {
-    this.bottomSheet.open(ShowPlanBottomSheet, {data: {planId: this.plan.id}})
+    this.bottomSheet.open(ShowPlanBottomSheet, {data: {
+      planId: this.plan.id,
+      isOwnPlan: this.isOwnPlan()}})
   }
 }
 
@@ -130,13 +132,11 @@ export class ShowPlanBottomSheet {
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
   ) {
     this.planId = data.planId
+    this.isOwnPlan = data.isOwnPlan
   }
 
-  planId;
-
-  isOwnPlan(): boolean {
-    return true;
-  }
+  isOwnPlan: boolean;
+  planId: string;
 
   toEditPage() {
     this.router.navigateByUrl("edit-plan/" + this.planId)

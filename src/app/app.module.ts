@@ -13,7 +13,7 @@ import {
   MatCheckboxModule,
   MatInputModule,
   MatListModule,
-  MatSnackBarModule
+  MatSnackBarModule, MatTableModule
 } from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
@@ -24,6 +24,7 @@ import {initializer} from "./app-init";
 import {BackButtonComponent} from "./BackButton";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import {PlanAuthGuard} from "./PlanAuthGuard";
+import { PlanNavTableComponent } from './plan-nav-table/plan-nav-table.component';
 
 
 
@@ -48,13 +49,14 @@ const routes: Routes = [
     FavoritePlansComponent,
     ShowPlanBottomSheet,
     BackButtonComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    PlanNavTableComponent
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
     KeycloakAngularModule,
     NgbModule,
-    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,
+    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],

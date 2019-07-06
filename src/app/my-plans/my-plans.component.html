@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-content>
       <mat-label *ngIf="plans.length === 0">Du hast noch keine Trainingspläne erstellt</mat-label>
-      <plan-list [plans]="plans"></plan-list>
+      <plan-nav-table [userName]="this.userName" [plans]="plans"></plan-nav-table>
     </mat-card-content>
   </mat-card>
 

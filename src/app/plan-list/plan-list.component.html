@@ -1,3 +1,13 @@
 <mat-nav-list>
-  <a mat-list-item [routerLinkActive]="['active']" [routerLink]="['/plan', plan.id]" *ngFor="let plan of plans">{{plan.title}}</a>
+  <div class="row"*ngFor="let plan of plans">
+    <div class="col">
+      <a mat-list-item [routerLinkActive]="['active']" [routerLink]="['/plan', plan.id]" >{{plan.title}}</a>
+    </div>
+    <div *ngIf="this.userName === plan.createdBy" class="col">
+      <span mat-list-item class="float-right">von {{plan.createdBy}}</span>
+    </div>
+  </div>
+
 </mat-nav-list>
+
+

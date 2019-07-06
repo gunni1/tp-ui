@@ -4,6 +4,7 @@ import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
 import {Router} from "@angular/router";
 import {KeycloakService} from "keycloak-angular";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-favorite-plans',
@@ -32,4 +33,6 @@ export class FavoritePlansComponent implements OnInit {
     ))
 
   }
+
+
 }

@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+
+.mat-column-createdBy {
+  width: 20%;
+  text-align: right;
+ }
+
+.mat-column-title {
+  width: 80%;
+}

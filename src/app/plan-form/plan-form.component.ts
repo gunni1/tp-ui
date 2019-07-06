@@ -46,7 +46,7 @@ export class PlanFormComponent implements OnInit {
     return control != null && control.touched && control.errors != null
   }
 
-  private isInEditMode() {
+  isInEditMode() {
     return this.modelId !== null
   }
 
