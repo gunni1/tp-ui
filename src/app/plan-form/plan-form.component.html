@@ -51,10 +51,10 @@
         </div>
         <div class="col">
           <div *ngIf="!isInEditMode()" class="float-right">
-            <button type="button" class="btn btn-success " (click)="onSubmit(false)">Plan speichern</button>
+            <button type="button" class="btn btn-success" (click)="onSubmit(false)">Speichern</button>
           </div>
           <div *ngIf="isInEditMode()" class="btn-group mr-3 float-right">
-            <button type="button" (click)="onSubmit(false)" class="btn btn-success">Plan speichern</button>
+            <button type="button" (click)="onSubmit(false)" class="btn btn-success">Speichern</button>
             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
               <button class="btn btn-success dropdown-toggle-split" ngbDropdownToggle></button>
               <div class="dropdown-menu" ngbDropdownMenu>

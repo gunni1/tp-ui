@@ -11,3 +11,5 @@
 
 # Notes
 `ng serve --proxy-config proxy.conf.json`
+
+Trapla - Trainingsplan
