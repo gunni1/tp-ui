@@ -3,7 +3,6 @@ import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
 import {Router} from "@angular/router";
-import {KeycloakService} from "keycloak-angular";
 import {Observable} from "rxjs";
 
 @Component({
@@ -17,20 +16,20 @@ export class FavoritePlansComponent implements OnInit {
   userName = ""
 
   constructor(
-    private planService: PlanService,
-    protected keycloakAngular: KeycloakService) { }
+    private planService: PlanService) { }
 
   ngOnInit() {
-    let userProfilePromise = this.keycloakAngular.loadUserProfile();
-    userProfilePromise.then(profile => this.userName = profile.username)
-    userProfilePromise.then(profile => this.planService.getUserFavoritePlans(profile.username).subscribe(
-      plans => {
-        this.plans = plans
-      },
-      error => {
-        handleError(error)
-      }
-    ))
+    //TODO: User Aus Profil laden
+    // let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    // userProfilePromise.then(profile => this.userName = profile.username)
+    // userProfilePromise.then(profile => this.planService.getUserFavoritePlans(profile.username).subscribe(
+    //   plans => {
+    //     this.plans = plans
+    //   },
+    //   error => {
+    //     handleError(error)
+    //   }
+    // ))
 
   }
 

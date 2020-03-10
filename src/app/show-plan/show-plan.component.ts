@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
-import {KeycloakService} from "keycloak-angular";
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetRef, MatSnackBar} from "@angular/material";
 
 @Component({
@@ -23,13 +22,14 @@ export class ShowPlanComponent implements OnInit {
     private route: ActivatedRoute,
     private planService: PlanService,
     private router: Router,
-    protected keycloakAngular: KeycloakService,
     private bottomSheet: MatBottomSheet
   ) { }
 
   ngOnInit() {
     this.plan = new Plan("","","",[])
-    let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    // let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    //TODO: username finden
+    let userProfilePromise
     userProfilePromise.then(profile => this.userName = profile.username)
     userProfilePromise.then(profile => {
       this.route.paramMap.subscribe(params => {

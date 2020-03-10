@@ -19,22 +19,19 @@ import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
 import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
-import {initializer} from "./app-init";
 import {BackButtonComponent} from "./BackButton";
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import {PlanAuthGuard} from "./PlanAuthGuard";
 import { PlanNavTableComponent } from './plan-nav-table/plan-nav-table.component';
 
 
 
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent},
-  { path: 'edit-plan/:planId', component: PlanFormComponent, canActivate: [PlanAuthGuard]},
-  { path: 'new-plan', component: PlanFormComponent, canActivate: [PlanAuthGuard]},
-  { path: 'my-plans', component: MyPlansComponent, canActivate: [PlanAuthGuard]},
-  { path: 'fav-plans', component: FavoritePlansComponent, canActivate: [PlanAuthGuard]},
-  { path: 'plan/:planId', component: ShowPlanComponent, canActivate: [PlanAuthGuard]},
+  { path: 'edit-plan/:planId', component: PlanFormComponent},
+  { path: 'new-plan', component: PlanFormComponent},
+  { path: 'my-plans', component: MyPlansComponent},
+  { path: 'fav-plans', component: FavoritePlansComponent},
+  { path: 'plan/:planId', component: ShowPlanComponent},
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: '**', redirectTo: '/home' }
 ];
@@ -54,21 +51,13 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
-    KeycloakAngularModule,
     NgbModule,
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
     FormsModule,ReactiveFormsModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
   entryComponents: [ShowPlanBottomSheet],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializer,
-      multi: true,
-      deps: [KeycloakService]
-    },PlanAuthGuard
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

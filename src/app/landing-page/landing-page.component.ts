@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {KeycloakService} from "keycloak-angular";
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material";
 
@@ -11,18 +10,18 @@ import {MatDialog} from "@angular/material";
 export class LandingPageComponent implements OnInit {
 
 
-  constructor(protected keycloakAngular: KeycloakService,
+  constructor(
               private router: Router) {
   }
 
   ngOnInit() {
-    this.keycloakAngular.isLoggedIn().then(
-      isLoggedIn => {
-        if (isLoggedIn) {
-          this.router.navigateByUrl("/my-plans")
-        }
-      }
-    )
+    // this.keycloakAngular.isLoggedIn().then(
+    //   isLoggedIn => {
+    //     if (isLoggedIn) {
+    //       this.router.navigateByUrl("/my-plans")
+    //     }
+    //   }
+    // )
   }
 
 }

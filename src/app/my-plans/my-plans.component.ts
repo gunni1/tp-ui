@@ -3,7 +3,6 @@ import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {handleError} from "../helpers";
-import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-my-plans',
@@ -16,19 +15,19 @@ export class MyPlansComponent implements OnInit {
   userName = ""
 
   constructor(
-    private planService: PlanService,
-    protected keycloakAngular: KeycloakService) { }
+    private planService: PlanService) { }
 
   ngOnInit() {
-    let userProfilePromise = this.keycloakAngular.loadUserProfile();
-    userProfilePromise.then(profile => this.userName = profile.username)
-    userProfilePromise.then(profile => this.planService.getUsersPlans(profile.username).subscribe(
-      plans => {
-        this.plans = plans
-      },
-      error => {
-        handleError(error)
-      }
-    ))
+    // TODO Username aus Profil laden
+    // let userProfilePromise = this.keycloakAngular.loadUserProfile();
+    // userProfilePromise.then(profile => this.userName = profile.username)
+    // userProfilePromise.then(profile => this.planService.getUsersPlans(profile.username).subscribe(
+    //   plans => {
+    //     this.plans = plans
+    //   },
+    //   error => {
+    //     handleError(error)
+    //   }
+    // ))
   }
 }
