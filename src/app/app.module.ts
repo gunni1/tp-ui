@@ -12,7 +12,7 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatInputModule,
-  MatListModule,
+  MatListModule,MatExpansionModule,
   MatSnackBarModule, MatTableModule
 } from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
@@ -53,7 +53,7 @@ const routes: Routes = [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
     NgbModule,
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
-    FormsModule,ReactiveFormsModule,
+    FormsModule,ReactiveFormsModule,MatExpansionModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
   entryComponents: [ShowPlanBottomSheet],

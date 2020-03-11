@@ -13,3 +13,18 @@
 `ng serve --proxy-config proxy.conf.json`
 
 Trapla - Trainingsplan
+
+## Create Cognito Auth with amplifiy
+Install 
+- aws-amplify-angular
+- aws-amplify
+
+Setup Amplify for the project
+`amplify init`
+
+Add authentication (create UserPool via amplify cli)
+`amplify add auth`
+
+Execute Resource Creation 
+`amplify push`
+
