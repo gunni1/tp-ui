@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material";
 import { Auth } from 'aws-amplify';
 import {FormControl, FormGroup} from "@angular/forms";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-landing-page',
@@ -10,7 +11,9 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  constructor(private router: Router) {  }
+  constructor(
+    private router: Router,
+    private userService: UserService) {  }
 
   loginForm = new FormGroup({
     username: new FormControl(),
@@ -24,41 +27,17 @@ export class LandingPageComponent implements OnInit {
   });
 
   doLogin() {
-
+    let username = this.loginForm.get('username').value;
+    let password = this.loginForm.get('password').value;
+    this.userService.signIn(username, password)
   }
 
   doSignUp() {
     let username = this.registerForm.get('username').value;
     let password = this.registerForm.get('password').value;
     let email = this.registerForm.get('email').value;
-    Auth.signUp({
-      username,
-      password,
-      attributes: {
-        email,
-      },
-      validationData: []  //optional
-    })
-  }
+    this.userService.signUp(username, password, email);
 
-
-  createUser() {
-    console.log("create clicked");
-
-    let username = "harry";
-    let password = "geheim";
-    let email = "harry@hirsch.de";
-
-    Auth.signUp({
-      username,
-      password,
-      attributes: {
-        email,          // optional
-      },
-      validationData: []  //optional
-    })
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
 
   }
 

@@ -22,13 +22,14 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {BackButtonComponent} from "./BackButton";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PlanNavTableComponent } from './plan-nav-table/plan-nav-table.component';
+import {AuthGuard} from "./auth/auth.guard";
 
 
 
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent},
   { path: 'edit-plan/:planId', component: PlanFormComponent},
-  { path: 'new-plan', component: PlanFormComponent},
+  { path: 'new-plan', component: PlanFormComponent, canActivate: [AuthGuard]},
   { path: 'my-plans', component: MyPlansComponent},
   { path: 'fav-plans', component: FavoritePlansComponent},
   { path: 'plan/:planId', component: ShowPlanComponent},
