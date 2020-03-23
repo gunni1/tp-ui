@@ -23,15 +23,21 @@ import {BackButtonComponent} from "./BackButton";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PlanNavTableComponent } from './plan-nav-table/plan-nav-table.component';
 import {AuthGuard} from "./auth/auth.guard";
-
+/**
+ * Amplify
+ */
+import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplify-angular';
+import Auth from '@aws-amplify/auth';
+import Interactions from '@aws-amplify/interactions';
+import Storage from '@aws-amplify/storage';
 
 
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent},
-  { path: 'edit-plan/:planId', component: PlanFormComponent},
+  { path: 'edit-plan/:planId', component: PlanFormComponent, canActivate: [AuthGuard]},
   { path: 'new-plan', component: PlanFormComponent, canActivate: [AuthGuard]},
-  { path: 'my-plans', component: MyPlansComponent},
-  { path: 'fav-plans', component: FavoritePlansComponent},
+  { path: 'my-plans', component: MyPlansComponent, canActivate: [AuthGuard]},
+  { path: 'fav-plans', component: FavoritePlansComponent, canActivate: [AuthGuard]},
   { path: 'plan/:planId', component: ShowPlanComponent},
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: '**', redirectTo: '/home' }
@@ -49,16 +55,27 @@ const routes: Routes = [
     BackButtonComponent,
     LandingPageComponent,
     PlanNavTableComponent
+
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
     NgbModule,
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
     FormsModule,ReactiveFormsModule,MatExpansionModule,
+    AmplifyAngularModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
   entryComponents: [ShowPlanBottomSheet],
-  providers: [],
+  providers: [{
+    provide: AmplifyService,
+    useFactory:  () => {
+      return AmplifyModules({
+        Auth,
+        Storage,
+        Interactions
+      });
+    }
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

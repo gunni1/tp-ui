@@ -9,6 +9,7 @@ import {Plan} from "../plan/plan";
 import {MatSnackBar} from "@angular/material";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {isDefined} from "@ng-bootstrap/ng-bootstrap/util/util";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -21,6 +22,7 @@ export class PlanFormComponent implements OnInit {
   modelId: string
 
   constructor(
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private planService: PlanService,
     private route: ActivatedRoute,
@@ -29,15 +31,13 @@ export class PlanFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //TODO
-    // let userProfilePromise = this.keycloakAngular.loadUserProfile();
-    // userProfilePromise.then(profile => this.userName = profile.username)
-    // this.route.paramMap.subscribe(params => {
-    //   this.modelId = params.get('planId') || null
-    //   if (this.isInEditMode()) {
-    //     this.initWithPlanId(this.modelId)
-    //   }
-    // });
+    this.userName = this.userService.getUsername();
+    this.route.paramMap.subscribe(params => {
+      this.modelId = params.get('planId') || null
+      if (this.isInEditMode()) {
+        this.initWithPlanId(this.modelId)
+      }
+    });
   }
 
   formControlIsReadyWithErrors(formControlId: string): boolean {

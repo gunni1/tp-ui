@@ -1,53 +1,7 @@
 <div class="container">
-  <mat-accordion>
-    <!-- login -->
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Login
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form [formGroup]="loginForm">
-        <mat-form-field>
-          <mat-label>Benutzername</mat-label>
-          <input matInput formControlName="username">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Passwort</mat-label>
-          <input matInput type="password" formControlName="password">
-        </mat-form-field>
-      </form>
-      <mat-action-row>
-        <button type="button" class="btn btn-success" (click)="doLogin()">Login</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-    <!-- register -->
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Registrieren
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <form [formGroup]="registerForm">
-        <mat-form-field>
-          <mat-label>Benutzername</mat-label>
-          <input matInput formControlName="username">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Passwort</mat-label>
-          <input matInput type="password" formControlName="password">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>E-Mail Adresse</mat-label>
-          <input matInput type="text" formControlName="email">
-        </mat-form-field>
-        <!-- <mat-hint >Benötigt zur Account-Validierung und automatischen Passwortwiederherstellung</mat-hint> -->
-      </form>
-      <mat-action-row>
-        <button type="button" class="btn btn-success" (click)="doSignUp()">Registrieren</button>
-      </mat-action-row>
-    </mat-expansion-panel>
-  </mat-accordion>
+  <mat-card>
+    <amplify-authenticator [signUpConfig]="signUpConfig" ></amplify-authenticator>
+  </mat-card>
 
   <!--
   <mat-card>

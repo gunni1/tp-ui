@@ -3,6 +3,7 @@ import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {handleError} from "../helpers";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-my-plans',
@@ -11,23 +12,22 @@ import {handleError} from "../helpers";
 })
 export class MyPlansComponent implements OnInit {
 
-  plans: Plan[] = []
-  userName = ""
+  plans: Plan[] = [];
+  userName = "";
 
   constructor(
-    private planService: PlanService) { }
+    private planService: PlanService,
+    private userService: UserService) { }
 
   ngOnInit() {
-    // TODO Username aus Profil laden
-    // let userProfilePromise = this.keycloakAngular.loadUserProfile();
-    // userProfilePromise.then(profile => this.userName = profile.username)
-    // userProfilePromise.then(profile => this.planService.getUsersPlans(profile.username).subscribe(
-    //   plans => {
-    //     this.plans = plans
-    //   },
-    //   error => {
-    //     handleError(error)
-    //   }
-    // ))
+    this.userName = this.userService.getUsername();
+    this.planService.getUsersPlans(this.userName).subscribe(
+      plans => {
+        this.plans = plans
+      },
+      error => {
+        handleError(error)
+      }
+    )
   }
 }
