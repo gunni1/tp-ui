@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {KeycloakService} from "keycloak-angular";
 import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material";
+
 
 @Component({
   selector: 'app-landing-page',
@@ -9,20 +8,46 @@ import {MatDialog} from "@angular/material";
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
+  constructor(
+    private router: Router) {  }
 
-
-  constructor(protected keycloakAngular: KeycloakService,
-              private router: Router) {
+  signUpConfig = {
+    header: 'Registration',
+    hideAllDefaults: true,
+    defaultCountryCode: '1',
+    signUpFields: [
+      {
+        label: 'Username',
+        key: 'username',
+        required: true,
+        displayOrder: 1,
+        type: 'string',
+      },
+      {
+        label: 'Password',
+        key: 'password',
+        required: true,
+        displayOrder: 2,
+        type: 'password'
+      },
+      {
+        label: 'E-Mail',
+        key: 'email',
+        required: true,
+        displayOrder: 3,
+        type: 'string',
+      }
+    ]
   }
 
   ngOnInit() {
-    this.keycloakAngular.isLoggedIn().then(
-      isLoggedIn => {
-        if (isLoggedIn) {
-          this.router.navigateByUrl("/my-plans")
-        }
-      }
-    )
+    // this.keycloakAngular.isLoggedIn().then(
+    //   isLoggedIn => {
+    //     if (isLoggedIn) {
+    //       this.router.navigateByUrl("/my-plans")
+    //     }
+    //   }
+    // )
   }
 
 }

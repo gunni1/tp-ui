@@ -6,10 +6,11 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {switchMap} from "rxjs/operators";
 import {handleError} from "../helpers";
 import {Plan} from "../plan/plan";
-import {KeycloakService} from "keycloak-angular";
 import {MatSnackBar} from "@angular/material";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {isDefined} from "@ng-bootstrap/ng-bootstrap/util/util";
+import {UserService} from "../user.service";
+import {error} from "util";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -22,17 +23,20 @@ export class PlanFormComponent implements OnInit {
   modelId: string
 
   constructor(
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private planService: PlanService,
     private route: ActivatedRoute,
     private router: Router,
-    private snackBar: MatSnackBar,
-    protected keycloakAngular: KeycloakService
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    let userProfilePromise = this.keycloakAngular.loadUserProfile();
-    userProfilePromise.then(profile => this.userName = profile.username)
+    this.userService.getCurrentUserUsername().then(
+      user => this.userName = user
+    ).catch(
+      error => handleError(error)
+    );
     this.route.paramMap.subscribe(params => {
       this.modelId = params.get('planId') || null
       if (this.isInEditMode()) {
@@ -63,7 +67,7 @@ export class PlanFormComponent implements OnInit {
           this.router.navigateByUrl("/new-plan")
         }
         handleError(err);
-        
+
       }
     )
   }

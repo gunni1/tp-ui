@@ -12,29 +12,33 @@ import {
   MatCardModule,
   MatCheckboxModule,
   MatInputModule,
-  MatListModule,
+  MatListModule,MatExpansionModule,
   MatSnackBarModule, MatTableModule
 } from "@angular/material";
 import {HttpClientModule} from "@angular/common/http";
 import { PlanListComponent } from './plan-list/plan-list.component';
 import { FavoritePlansComponent } from './favorite-plans/favorite-plans.component';
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
-import {initializer} from "./app-init";
 import {BackButtonComponent} from "./BackButton";
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import {PlanAuthGuard} from "./PlanAuthGuard";
 import { PlanNavTableComponent } from './plan-nav-table/plan-nav-table.component';
-
+import {AuthGuard} from "./auth/auth.guard";
+/**
+ * Amplify
+ */
+import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplify-angular';
+import Auth from '@aws-amplify/auth';
+import Interactions from '@aws-amplify/interactions';
+import Storage from '@aws-amplify/storage';
 
 
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent},
-  { path: 'edit-plan/:planId', component: PlanFormComponent, canActivate: [PlanAuthGuard]},
-  { path: 'new-plan', component: PlanFormComponent, canActivate: [PlanAuthGuard]},
-  { path: 'my-plans', component: MyPlansComponent, canActivate: [PlanAuthGuard]},
-  { path: 'fav-plans', component: FavoritePlansComponent, canActivate: [PlanAuthGuard]},
-  { path: 'plan/:planId', component: ShowPlanComponent, canActivate: [PlanAuthGuard]},
+  { path: 'edit-plan/:planId', component: PlanFormComponent, canActivate: [AuthGuard]},
+  { path: 'new-plan', component: PlanFormComponent, canActivate: [AuthGuard]},
+  { path: 'my-plans', component: MyPlansComponent, canActivate: [AuthGuard]},
+  { path: 'fav-plans', component: FavoritePlansComponent, canActivate: [AuthGuard]},
+  { path: 'plan/:planId', component: ShowPlanComponent},
   { path: '', pathMatch: 'full', redirectTo: '/home' },
   { path: '**', redirectTo: '/home' }
 ];
@@ -51,24 +55,27 @@ const routes: Routes = [
     BackButtonComponent,
     LandingPageComponent,
     PlanNavTableComponent
+
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,
-    KeycloakAngularModule,
     NgbModule,
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
-    FormsModule,ReactiveFormsModule,
+    FormsModule,ReactiveFormsModule,MatExpansionModule,
+    AmplifyAngularModule,
     RouterModule.forRoot(routes, { enableTracing: true })
   ],
   entryComponents: [ShowPlanBottomSheet],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializer,
-      multi: true,
-      deps: [KeycloakService]
-    },PlanAuthGuard
-  ],
+  providers: [{
+    provide: AmplifyService,
+    useFactory:  () => {
+      return AmplifyModules({
+        Auth,
+        Storage,
+        Interactions
+      });
+    }
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

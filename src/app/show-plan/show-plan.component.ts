@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Plan} from "../plan/plan";
 import {PlanService} from "../plan/plan.service";
 import {handleError} from "../helpers";
-import {KeycloakService} from "keycloak-angular";
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetRef, MatSnackBar} from "@angular/material";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-show-plan',
@@ -23,23 +23,24 @@ export class ShowPlanComponent implements OnInit {
     private route: ActivatedRoute,
     private planService: PlanService,
     private router: Router,
-    protected keycloakAngular: KeycloakService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
-    this.plan = new Plan("","","",[])
-    let userProfilePromise = this.keycloakAngular.loadUserProfile();
-    userProfilePromise.then(profile => this.userName = profile.username)
-    userProfilePromise.then(profile => {
+    this.plan = new Plan("","","",[]);
+    let usernamePromise = this.userService.getCurrentUserUsername()
+    usernamePromise.then(user => this.userName = user);
+    usernamePromise.then(user => {
       this.route.paramMap.subscribe(params => {
         var modelId = params.get('planId') || null
         if (modelId !== null) {
           this.initPlan(modelId)
-          this.initFavorite(modelId, profile.username)
+          this.initFavorite(modelId, user)
         }
       });
-    })
+    });
+    //TODO: muss auch ohne login funktionieren
   }
 
   copyToClipboard() {

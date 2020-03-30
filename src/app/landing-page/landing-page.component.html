@@ -1,11 +1,20 @@
 <div class="container">
   <mat-card>
+    <amplify-authenticator [signUpConfig]="signUpConfig" ></amplify-authenticator>
+  </mat-card>
+
+  <!--
+  <mat-card>
     <mat-card-content>
       <div class="btn-group" role="group" aria-label="login">
         <button type="button" class="btn btn-outline-info" [routerLinkActive]="['active']" routerLink="/my-plans" >Login</button>
       </div>
+      <div class="btn-group" role="group" aria-label="login">
+        <button type="button" class="btn btn-outline-info" (click)="createUser()" >Create</button>
+      </div>
     </mat-card-content>
   </mat-card>
+  -->
 </div>
 
 
