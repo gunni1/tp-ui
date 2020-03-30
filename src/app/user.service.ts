@@ -22,16 +22,25 @@ export class UserService {
       });
   }
 
+  getUsername(): string {
+    return ""
+  }
+
   /**
    * Return current Users username
    */
-  getUsername() {
-    if(this.signedIn) {
-      return this.currentUser.username
-    }
-    else {
-      return "";
-    }
+  getCurrentUserUsername(): Promise<string> {
+    return new Promise((resolve) => {
+      Auth.currentAuthenticatedUser({bypassCache: false})
+        .then((user) => {
+          if ( user) {
+            resolve(user.getUsername());
+          }
+        }).catch(() => {
+        resolve(null)
+      });
+    });
+
   }
 
   isAuthenticated(): Promise<boolean> {

@@ -29,17 +29,18 @@ export class ShowPlanComponent implements OnInit {
 
   ngOnInit() {
     this.plan = new Plan("","","",[]);
-    this.userName = this.userService.getUsername();
-    //TODO: muss auch ohne login funktionieren
-    this.route.paramMap.subscribe(params => {
-      var modelId = params.get('planId') || null
-      if (modelId !== null) {
-        this.initPlan(modelId)
-        this.initFavorite(modelId, this.userName)
-      }
+    let usernamePromise = this.userService.getCurrentUserUsername()
+    usernamePromise.then(user => this.userName = user);
+    usernamePromise.then(user => {
+      this.route.paramMap.subscribe(params => {
+        var modelId = params.get('planId') || null
+        if (modelId !== null) {
+          this.initPlan(modelId)
+          this.initFavorite(modelId, user)
+        }
+      });
     });
-
-
+    //TODO: muss auch ohne login funktionieren
   }
 
   copyToClipboard() {

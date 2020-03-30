@@ -10,6 +10,7 @@ import {MatSnackBar} from "@angular/material";
 import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
 import {isDefined} from "@ng-bootstrap/ng-bootstrap/util/util";
 import {UserService} from "../user.service";
+import {error} from "util";
 
 @Component({
   selector: 'app-new-plan-form',
@@ -31,7 +32,11 @@ export class PlanFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userName = this.userService.getUsername();
+    this.userService.getCurrentUserUsername().then(
+      user => this.userName = user
+    ).catch(
+      error => handleError(error)
+    );
     this.route.paramMap.subscribe(params => {
       this.modelId = params.get('planId') || null
       if (this.isInEditMode()) {
@@ -62,7 +67,7 @@ export class PlanFormComponent implements OnInit {
           this.router.navigateByUrl("/new-plan")
         }
         handleError(err);
-        
+
       }
     )
   }

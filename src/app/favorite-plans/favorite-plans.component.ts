@@ -14,22 +14,25 @@ import {UserService} from "../user.service";
 export class FavoritePlansComponent implements OnInit {
 
   plans: Plan[] = []
-  userName = ""
+  currentUserName = "";
 
   constructor(
     private planService: PlanService,
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userName = this.userService.getUsername()
-    this.planService.getUserFavoritePlans(this.userName).subscribe(
-      plans => {
-        this.plans = plans
-      },
-      error => {
-        handleError(error)
-      }
-    )
+    this.userService.getCurrentUserUsername().then( user => {
+      this.planService.getUserFavoritePlans(user).subscribe(
+        plans => {
+          this.plans = plans
+          this.currentUserName = user
+        },
+        error => {
+          handleError(error)
+        }
+      )
+    })
+
   }
 
 

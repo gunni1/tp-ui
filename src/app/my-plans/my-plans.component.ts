@@ -20,14 +20,18 @@ export class MyPlansComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
-    this.userName = this.userService.getUsername();
-    this.planService.getUsersPlans(this.userName).subscribe(
-      plans => {
-        this.plans = plans
-      },
-      error => {
-        handleError(error)
+    this.userService.getCurrentUserUsername().then(
+      user => {
+        this.planService.getUsersPlans(user).subscribe(
+          plans => {
+            this.plans = plans;
+            this.userName = user
+          },
+          error => {
+            handleError(error)
+          }
+        )
       }
-    )
+    );
   }
 }
