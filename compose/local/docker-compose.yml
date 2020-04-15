@@ -12,7 +12,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
   plan-ui:
-    image: gunni1/plan-ui:0.9
+    image: gunni1/plan-ui:0.9.1
     container_name: plan-ui
     ports:
       - "8090:8080"

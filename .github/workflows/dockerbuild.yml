@@ -1,0 +1,23 @@
+name: Build Node and Package
+
+on: [push]
+
+env:
+  IMAGE_NAME: plan-ui
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build -t my-image-name:$(date +%s) .
