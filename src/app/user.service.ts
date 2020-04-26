@@ -22,7 +22,22 @@ export class UserService {
       });
   }
 
+  getCurrentUserJwt(): Promise<string> {
+    return new Promise((resolve) => {
+      Auth.currentSession()
+        .then((session) => resolve(session.getAccessToken().getJwtToken())).catch(() => {
+        resolve(null)
+      });
+    });
+  }
+
+  async getCurrentUserJwtAsync(): String {
+    let session = await Auth.currentSession()
+    return session.getAccessToken().getJwtToken()
+  }
+
   getUsername(): string {
+
     return ""
   }
 

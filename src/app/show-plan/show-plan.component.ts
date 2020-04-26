@@ -33,7 +33,7 @@ export class ShowPlanComponent implements OnInit {
     usernamePromise.then(user => this.userName = user);
     usernamePromise.then(user => {
       this.route.paramMap.subscribe(params => {
-        var modelId = params.get('planId') || null
+        let modelId = params.get('planId') || null
         if (modelId !== null) {
           this.initPlan(modelId)
           this.initFavorite(modelId, user)

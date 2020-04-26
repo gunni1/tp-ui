@@ -5,13 +5,16 @@ import {Plan} from "./plan";
 import {Practice} from "./practice";
 import {environment} from "../../environments/environment";
 import {handleError} from "../helpers";
+import {UserService} from "../user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private userService: UserService) { }
 
   private httpOptionsJsonResult = {
     headers: new HttpHeaders({
@@ -40,7 +43,7 @@ export class PlanService {
   }
 
   getUsersPlans(userId: String): Observable<Plan[]> {
-    const path = environment.planBackendPath + `/userplans/${userId}`
+    const path = environment.planBackendPath + `/userplans/${userId}`;
     return this.http.get<Plan[]>(path, this.httpOptionsJsonResult)
   }
 
@@ -57,8 +60,11 @@ export class PlanService {
 
   getUserFavoritePlanIds(userId: string): Observable<string[]> {
     const path = environment.planBackendPath + `/userfav/${userId}`
+    let userToken = "";
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json'}),
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'token': userToken}),
       params: {"onlyIds": "true"}
     };
     return this.http.get<string[]>(path, httpOptions)
