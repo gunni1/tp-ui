@@ -22,7 +22,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      PLAN_DB_URL: mongodb://mongodb:27017
+      PLAN_DB_URL: mongodb://plan-db:27017
   mongodb:
     image: mongo:3.6
     container_name: plan-db

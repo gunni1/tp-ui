@@ -28,3 +28,9 @@ Add authentication (create UserPool via amplify cli)
 Execute Resource Creation 
 `amplify push`
 
+List environments
+`amplify env list`
+
+Change environments
+`amplify checkout <env>`
+

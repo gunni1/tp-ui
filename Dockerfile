@@ -2,8 +2,12 @@
 FROM node:12.16-alpine AS node-build
 WORKDIR /app
 COPY package.json ./
+RUN npm install -g @aws-amplify/cli
 RUN npm install
 COPY . .
+RUN amplify --version
+# configure to aws account
+# amplfify env pull <stage>
 RUN npm run build
 
 # Stage 2: build docker image

@@ -1,6 +1,33 @@
 <div class="container">
+
+
   <mat-card>
-    <amplify-authenticator [signUpConfig]="signUpConfig" ></amplify-authenticator>
+    <mat-card-title>
+      Trapla
+    </mat-card-title>
+    <mat-card-content>
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <mat-list class="col-8">
+            <mat-list-item>
+              <button type="button" class="btn btn-block btn-outline-dark">Meine Trainingsplände</button>
+            </mat-list-item>
+            <mat-list-item>
+              <button type="button" class="btn btn-block btn-outline-dark">Meine Favoriten</button>
+            </mat-list-item>
+            <mat-list-item>
+              <button type="button" class="btn btn-block btn-outline-dark">Neuer Trainingsplan</button>
+            </mat-list-item>
+            <mat-list-item>
+              <button type="button" class="mt-4 btn btn-block btn-outline-dark">Logout</button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <amplify-authenticator [signUpConfig]="signUpConfig" [hide]="['Greetings']"></amplify-authenticator>
+    </mat-card-footer>
   </mat-card>
 
   <!--
