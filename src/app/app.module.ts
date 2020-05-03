@@ -30,10 +30,12 @@ import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplif
 import Auth from '@aws-amplify/auth';
 import Interactions from '@aws-amplify/interactions';
 import Storage from '@aws-amplify/storage';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 const routes: Routes = [
   { path: 'home', component: LandingPageComponent},
+  { path: 'user-home', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'edit-plan/:planId', component: PlanFormComponent, canActivate: [AuthGuard]},
   { path: 'new-plan', component: PlanFormComponent, canActivate: [AuthGuard]},
   { path: 'my-plans', component: MyPlansComponent, canActivate: [AuthGuard]},
@@ -54,8 +56,8 @@ const routes: Routes = [
     ShowPlanBottomSheet,
     BackButtonComponent,
     LandingPageComponent,
-    PlanNavTableComponent
-
+    PlanNavTableComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,HttpClientModule,BrowserAnimationsModule,

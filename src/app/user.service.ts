@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth } from 'aws-amplify';
 import {resolve} from "q";
 import {AmplifyService} from "aws-amplify-angular";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ export class UserService {
   private signedIn: boolean;
   private currentUser: any = null;
 
-  constructor(private amplifyService: AmplifyService) {
+  constructor(
+    private amplifyService: AmplifyService,
+    private router: Router) {
     this.amplifyService.authStateChange$
       .subscribe(authState => {
         this.signedIn = authState.state === 'signedIn';
@@ -18,12 +21,9 @@ export class UserService {
           this.currentUser = null;
         } else {
           this.currentUser = authState.user;
+          this.router.navigateByUrl("/user-home")
         }
       });
-  }
-
-  getUsername(): string {
-    return ""
   }
 
   /**
@@ -41,6 +41,11 @@ export class UserService {
       });
     });
 
+  }
+
+  logout() {
+    this.currentUser = null;
+    return Auth.signOut()
   }
 
   isAuthenticated(): Promise<boolean> {

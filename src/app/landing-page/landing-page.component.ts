@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {UserService} from "../user.service";
 
 
 @Component({
@@ -9,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class LandingPageComponent implements OnInit {
   constructor(
-    private router: Router) {  }
+    private userService: UserService) {  }
 
   signUpConfig = {
     header: 'Registration',
@@ -41,13 +42,6 @@ export class LandingPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.keycloakAngular.isLoggedIn().then(
-    //   isLoggedIn => {
-    //     if (isLoggedIn) {
-    //       this.router.navigateByUrl("/my-plans")
-    //     }
-    //   }
-    // )
   }
 
 }
