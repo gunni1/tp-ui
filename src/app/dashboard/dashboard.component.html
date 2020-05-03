@@ -1,0 +1,33 @@
+<div class="container">
+
+
+  <mat-card>
+    <mat-card-content>
+      <div class="container">
+        <div class="row justify-content-md-center">
+          <mat-list class="col-8">
+            <mat-list-item>
+              <button type="button" class="btn btn-block btn-outline-dark"
+                      [routerLinkActive]="['active']" [routerLink]="['/my-plans']">Meine Trainingsplände</button>
+            </mat-list-item>
+            <mat-list-item>
+              <button type="button" class="btn btn-block btn-outline-dark"
+                      [routerLinkActive]="['active']" [routerLink]="['/fav-plans']">Meine Favoriten</button>
+            </mat-list-item>
+            <mat-list-item>
+              <button type="button" class="btn btn-block btn-outline-dark"
+                      [routerLinkActive]="['active']" [routerLink]="['/new-plan']">Neuer Trainingsplan</button>
+            </mat-list-item>
+            <mat-list-item>
+              <button type="button" class="mt-4 btn btn-block btn-outline-dark" (click)="logout()">Logout</button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>
+
+
+
