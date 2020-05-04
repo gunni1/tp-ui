@@ -12,37 +12,40 @@
             </mat-form-field>
           </div>
         </div>
-        <div formArrayName="practices">
-          <div *ngFor="let practice of getPracticesFormArray().controls; let practicesIndex=index">
-            <div [formGroupName]="practicesIndex" class="row">
-              <div class="col-7">
-                <mat-form-field>
-                  <input matInput placeholder="Übung" formControlName="name">
-                </mat-form-field>
-              </div>
-              <div class="col-3">
-                <mat-form-field>
-                  <input matInput placeholder="Wdh / Dauer" formControlName="quantity">
-                </mat-form-field>
-              </div>
-              <div class="col-2">
-                <div class="row">
-                  <div class="col-2">
-                    <button (click)="addPracticeControlAfter(practicesIndex)" type="button" class="close" aria-label="Danach einfügen">
-                      <span class="plan-form-control" aria-hidden="true">&#43;</span>
-                    </button>
-                  </div>
-                  <div class="col-2">
-                    <button (click)="removePracticeControls(practicesIndex)" type="button" class="close" aria-label="Löschen">
-                      <span class="plan-form-control" aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+      </form>
+      <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let practice of practices; let practiceIndex=index" cdkDrag>
+          <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+          <div class="row container">
+            <div class="col-6">
+              <mat-form-field>
+                <input matInput placeholder="Übung" [(ngModel)]="practices[practiceIndex].name" >
+              </mat-form-field>
+            </div>
+            <div class="col-3">
+              <mat-form-field>
+                <input matInput placeholder="Wdh / Dauer" [(ngModel)]="practices[practiceIndex].quantity">
+              </mat-form-field>
+            </div>
+            <div class="col-2">
+              <div class="row">
+                <div class="col-2">
+                  <button (click)="addPracticeControlAfter(practiceIndex)" type="button" class="close" aria-label="Danach einfügen">
+                    <span class="plan-form-control" aria-hidden="true">&#43;</span>
+                  </button>
+                </div>
+                <div class="col-2">
+                  <button (click)="removePracticeControls(practiceIndex)" type="button" class="close" aria-label="Löschen">
+                    <span class="plan-form-control" aria-hidden="true">&times;</span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
-      </form>
+      </div>
+
     </mat-card-content>
     <mat-card-actions>
       <div class="row">
@@ -66,12 +69,6 @@
       </div>
     </mat-card-actions>
   </mat-card>
-  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-    <div class="example-box" *ngFor="let practice of practices" cdkDrag>
-      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-      {{practice.name}}
-    </div>
-  </div>
 </div>
 
 

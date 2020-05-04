@@ -19,8 +19,7 @@ export class PlanFormComponent implements OnInit {
   userName = ""
   form = this.getEmptyForm()
   modelId: string
-
-  practices = [ new Practice("eins","eins"), new Practice("zwei", "zwei")]
+  practices = [ new Practice("","")]
 
   constructor(
     private userService: UserService,
@@ -65,6 +64,7 @@ export class PlanFormComponent implements OnInit {
           title: this.formBuilder.control(plan.title, Validators.required),
           practices: this.asFormArray(plan.practices)
         })
+        this.practices = plan.practices;
       },
       err => {
         if(err.error.error === "NO_PLAN_FOUND") {
@@ -77,7 +77,7 @@ export class PlanFormComponent implements OnInit {
   }
 
   private asFormArray(practices: Practice[]):FormArray {
-    let result = this.formBuilder.array([])
+    let result = this.formBuilder.array([]);
     for(let practice of practices){
       result.push(this.formBuilder.group({
         name: this.formBuilder.control(practice.name),
@@ -85,20 +85,6 @@ export class PlanFormComponent implements OnInit {
       }))
     }
     return result
-  }
-
-  getPracticesFormArray () {
-    return this.form.get('practices') as FormArray
-  }
-
-  private getPractices(): Practice[] {
-    let practiceFormArray = this.getPracticesFormArray()
-    let practices = []
-    for (let i=0; i < practiceFormArray.length; i++) {
-      let formGroup = practiceFormArray.at(i)
-      practices.push(new Practice(formGroup.get('name').value, formGroup.get('quantity').value))
-    }
-    return practices
   }
 
   private getEmptyForm() : FormGroup{
@@ -115,8 +101,7 @@ export class PlanFormComponent implements OnInit {
 
   onSubmit(saveAsNew: boolean) {
     if(this.form.valid) {
-      let practices = this.getPractices()
-      let plan = new Plan("", this.form.get('title').value, this.userName, practices)
+      let plan = new Plan("", this.form.get('title').value, this.userName, this.practices)
 
       if (this.isInEditMode() && saveAsNew == false) {
         this.planService.updatePlan(plan, this.modelId).subscribe(
@@ -141,25 +126,12 @@ export class PlanFormComponent implements OnInit {
     }
   }
 
-
-  addPracticeControls() {
-    let control = this.form.get('practices') as FormArray
-    control.push(
-      this.formBuilder.group({
-        name: this.formBuilder.control(''),
-        quantity: this.formBuilder.control('')
-      })
-    )
-  }
-
   addPracticeControlAfter(index: number) {
-    let control = this.form.get('practices') as FormArray
-    control.insert(index +1 , this.newPracticeControl())
+    this.practices.splice(index+1,0, new Practice("",""))
   }
 
   removePracticeControls(index: number) {
-    let control = this.form.get('practices') as FormArray
-    control.removeAt(index);
+    this.practices.splice(index, 1)
   }
 
   private showNotification(text: string) {

@@ -67,7 +67,7 @@ const routes: Routes = [
     MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
     FormsModule,ReactiveFormsModule,MatExpansionModule,DragDropModule,
     AmplifyAngularModule,
-    RouterModule.forRoot(routes, { enableTracing: true })
+    RouterModule.forRoot(routes, { enableTracing: false })
   ],
   entryComponents: [ShowPlanBottomSheet],
   providers: [{
