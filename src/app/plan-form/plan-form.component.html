@@ -66,6 +66,12 @@
       </div>
     </mat-card-actions>
   </mat-card>
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let practice of practices" cdkDrag>
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+      {{practice.name}}
+    </div>
+  </div>
 </div>
 
 

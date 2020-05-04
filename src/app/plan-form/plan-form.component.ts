@@ -1,16 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Practice} from "../plan/practice";
 import {PlanService} from "../plan/plan.service";
-import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {switchMap} from "rxjs/operators";
+import {ActivatedRoute, Router} from "@angular/router";
 import {handleError} from "../helpers";
 import {Plan} from "../plan/plan";
 import {MatSnackBar} from "@angular/material";
-import {HttpErrorResponse, HttpResponse} from "@angular/common/http";
-import {isDefined} from "@ng-bootstrap/ng-bootstrap/util/util";
+import {HttpErrorResponse} from "@angular/common/http";
 import {UserService} from "../user.service";
-import {error} from "util";
+import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-new-plan-form',
@@ -21,6 +19,8 @@ export class PlanFormComponent implements OnInit {
   userName = ""
   form = this.getEmptyForm()
   modelId: string
+
+  practices = [ new Practice("eins","eins"), new Practice("zwei", "zwei")]
 
   constructor(
     private userService: UserService,
@@ -43,6 +43,10 @@ export class PlanFormComponent implements OnInit {
         this.initWithPlanId(this.modelId)
       }
     });
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.practices, event.previousIndex, event.currentIndex);
   }
 
   formControlIsReadyWithErrors(formControlId: string): boolean {
