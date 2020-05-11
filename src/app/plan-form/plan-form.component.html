@@ -1,10 +1,10 @@
 <div class="container">
   <mat-card>
-    <mat-card-title>Trainingsplan</mat-card-title>
+    <mat-card-title>Trainingsplan erstellen</mat-card-title>
     <mat-card-content>
       <form [formGroup]="form">
         <div class="row">
-          <div class="col-4">
+          <div class="col-6">
             <mat-form-field>
               <input matInput placeholder="Titel" formControlName="title"  >
               <mat-error *ngIf="formControlIsReadyWithErrors('title') && form.get('title').errors.required">Ein Titel muss angegeben werden.</mat-error>
@@ -16,18 +16,24 @@
       <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
         <div class="example-box" *ngFor="let practice of practices; let practiceIndex=index" cdkDrag>
           <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-          <div class="row container">
-            <div class="col-6">
+          <div class="row">
+            <div class="col-7 col-md-9">
               <mat-form-field>
                 <input matInput placeholder="Übung" [(ngModel)]="practices[practiceIndex].name" >
               </mat-form-field>
             </div>
-            <div class="col-3">
+            <div class="col-3 col-md-2 no-padding-left">
               <mat-form-field>
                 <input matInput placeholder="Wdh / Dauer" [(ngModel)]="practices[practiceIndex].quantity">
               </mat-form-field>
             </div>
-            <div class="col-2">
+            <div class="col-2 col-md-1">
+              <button (click)="removePracticeControls(practiceIndex)" type="button" class="close pull-right" aria-label="Löschen">
+                <span class="plan-form-control" aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <!--
+            <div class="col-3">
               <div class="row">
                 <div class="col-2">
                   <button (click)="addPracticeControlAfter(practiceIndex)" type="button" class="close" aria-label="Danach einfügen">
@@ -41,16 +47,16 @@
                 </div>
               </div>
             </div>
+            -->
           </div>
 
         </div>
       </div>
-
     </mat-card-content>
     <mat-card-actions>
       <div class="row">
         <div class="col">
-          <back-button></back-button>
+          <button (click)="addPracticeControl()" type="button" class="btn btn-outline-info">Übung hinz.</button>
         </div>
         <div class="col">
           <div *ngIf="!isInEditMode()" class="float-right">

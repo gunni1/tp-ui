@@ -32,6 +32,7 @@ import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplif
 import Auth from '@aws-amplify/auth';
 import Interactions from '@aws-amplify/interactions';
 import Storage from '@aws-amplify/storage';
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -62,12 +63,12 @@ const routes: Routes = [
     DashboardComponent
   ],
   imports: [
-    BrowserModule,HttpClientModule,BrowserAnimationsModule,
+    BrowserModule, HttpClientModule, BrowserAnimationsModule,
     NgbModule,
-    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
-    FormsModule,ReactiveFormsModule,MatExpansionModule,DragDropModule,
+    MatInputModule, MatCardModule, MatListModule, MatCheckboxModule, MatSnackBarModule, MatBottomSheetModule, MatTableModule,
+    FormsModule, ReactiveFormsModule, MatExpansionModule, DragDropModule,
     AmplifyAngularModule,
-    RouterModule.forRoot(routes, { enableTracing: false })
+    RouterModule.forRoot(routes, {enableTracing: false}), MatButtonModule
   ],
   entryComponents: [ShowPlanBottomSheet],
   providers: [{

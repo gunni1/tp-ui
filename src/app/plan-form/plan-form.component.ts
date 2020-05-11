@@ -126,8 +126,8 @@ export class PlanFormComponent implements OnInit {
     }
   }
 
-  addPracticeControlAfter(index: number) {
-    this.practices.splice(index+1,0, new Practice("",""))
+  addPracticeControl() {
+    this.practices.push(new Practice("",""))
   }
 
   removePracticeControls(index: number) {
