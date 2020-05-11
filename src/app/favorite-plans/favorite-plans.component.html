@@ -1,5 +1,8 @@
 <div class="container">
   <mat-card>
+    <mat-card-title>
+      <mat-label>Meine Favoriten</mat-label>
+    </mat-card-title>
     <mat-card-content>
       <mat-label *ngIf="plans.length === 0">Du hast noch keine Trainingspläne zu deinen favoriten hinzugefügt</mat-label>
       <plan-nav-table [userName]="this.currentUserName" [plans]="plans"></plan-nav-table>

@@ -22,6 +22,8 @@ import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {BackButtonComponent} from "./BackButton";
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { PlanNavTableComponent } from './plan-nav-table/plan-nav-table.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {AuthGuard} from "./auth/auth.guard";
 /**
  * Amplify
@@ -30,7 +32,8 @@ import { AmplifyAngularModule, AmplifyService, AmplifyModules } from 'aws-amplif
 import Auth from '@aws-amplify/auth';
 import Interactions from '@aws-amplify/interactions';
 import Storage from '@aws-amplify/storage';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import {MatButtonModule} from "@angular/material/button";
+
 
 
 const routes: Routes = [
@@ -60,12 +63,12 @@ const routes: Routes = [
     DashboardComponent
   ],
   imports: [
-    BrowserModule,HttpClientModule,BrowserAnimationsModule,
+    BrowserModule, HttpClientModule, BrowserAnimationsModule,
     NgbModule,
-    MatInputModule,MatCardModule,MatListModule,MatCheckboxModule,MatSnackBarModule,MatBottomSheetModule,MatTableModule,
-    FormsModule,ReactiveFormsModule,MatExpansionModule,
+    MatInputModule, MatCardModule, MatListModule, MatCheckboxModule, MatSnackBarModule, MatBottomSheetModule, MatTableModule,
+    FormsModule, ReactiveFormsModule, MatExpansionModule, DragDropModule,
     AmplifyAngularModule,
-    RouterModule.forRoot(routes, { enableTracing: true })
+    RouterModule.forRoot(routes, {enableTracing: false}), MatButtonModule
   ],
   entryComponents: [ShowPlanBottomSheet],
   providers: [{
